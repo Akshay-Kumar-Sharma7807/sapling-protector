@@ -1,0 +1,208 @@
+/* App Styles */
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  --background: rgb(58, 23, 255);
+  --accent-color: rgb(248, 161, 0);
+  --accent-light: rgb(255, 189, 65);
+  --text-color: rgb(0, 0, 0);
+  --shadow-color: black;
+  --shadow: 4px;
+  --border: 4px;
+  --btn-color: rgb(255, 118, 136);
+  color: var(--text-color);
+  background: var(--background);
+}
+
+.App.modern {
+  --background: rgb(0, 132, 255);
+  --accent-color: rgb(23, 182, 255);
+  --text-color: white;
+  --shadow-color: none;
+  --shadow: 0px;
+  --border: 0px;
+  --btn-color: rgb(255, 102, 0);
+}
+.App.modern button, .App.modern li, .App.modern input {
+  border-radius: 10px;
+}
+/* =================== Universal Styles =============================== */
+.container {
+  display: flex;
+  justify-content: flex-start;
+  padding: 1.5rem 1rem 1rem 1rem;
+  align-items: center;
+  flex-direction: column;
+  flex: 1 1;
+  gap: 2rem;
+  width: clamp(100px, 100vw, 600px);
+  /* font-size: 4rem; */
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+  
+}
+
+button {
+  border: var(--border) solid black;
+  box-shadow: var(--shadow) var(--shadow) black;
+  color: var(--text-color);
+  /* Give this color a name */
+  background: var(--btn-color); 
+  padding: 5px 10px;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+button:active {
+  box-shadow: none;
+}
+
+/*  ======================== NavBar Styles ================================== */
+.navbar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* background: rgba(68, 0, 255, 0.404); */
+  box-shadow: 0px 4px 8px rgb(0, 255, 242);
+  /* background: var(--accent-color); */
+  width: 100vw;
+  padding: 0.4rem 1rem;
+  gap: 1rem;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(0.6rem, 1vw, 2rem);
+  /* overflow: hidden; */
+  max-width: 99vw;
+  /* flex: 0 1; */
+}
+
+.add-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  border: var(--border) solid black;
+  outline: none;
+  font-size: 2rem;
+  margin: none;
+  background: var(--btn-color);
+  color: var(--text-color);
+  cursor: pointer;
+  box-shadow: var(--shadow) var(--shadow) black;
+  font-weight: bold;
+  align-self: stretch;
+}
+
+.add-button:active {
+  box-shadow: none;
+}
+/* 
+button:focus {
+  box-shadow: none;
+} */
+
+input[type="text"] {
+  align-self: stretch;
+  padding: 10px 20px;
+  font-size: 1.4rem;
+  border: var(--border) solid black;
+  box-shadow: var(--shadow) var(--shadow) black;
+  outline: none;
+  flex-grow: 1;
+  width: 50vw;
+  min-width: 200px;
+  max-width: 550px;
+  /* min-width: 5rem; */
+  /* width: 80vw; */
+  /* width: clamp(5rem, 100%, 60rem); */
+}
+/* input[type="text"]:focus {
+  box-shadow: none;
+} */
+
+
+.list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.8rem;
+  flex: 1 1;
+  width: 100%;
+}
+
+.list li {
+  padding: 10px 20px;
+  border: var(--border) solid black;
+  /* flex: 1 1; */
+  width: 100%;
+  background: var(--accent-light);
+  font-size: 1.4rem;
+  color: black;
+  box-shadow: var(--shadow) var(--shadow) black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list li button {
+  font-size: 1.4rem;
+  padding: 3px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: calc(var(--border) - 2px) solid black; */
+  /* box-shadow: calc(var(--shadow) - 2px) calc(var(--shadow) - 2px) black; */
+}
+
+.list li button:active {
+  box-shadow: none;
+}
+.list .title {
+  /* flex-grow: 1; */
+}
+.list input[type="checkbox"] {
+  accent-color: var(--accent-light);
+  width: 2rem;
+  height: 2rem;
+}
+/* sidebar */
+/* .sidebar{
+  position: fixed;
+  transform: translate(-150rem);
+  width: 25rem;
+  background-color: rgb(233, 233, 233);
+  border-radius: .8rem;
+  height: 100%;
+}
+.sidebar.open{
+  transform: translateX(-29.7rem);
+}
+
+.sidebar h2{
+  padding: 2rem;
+}
+.sidebar-close{
+  border-radius: 50%;
+  border: .1rem #000000 solid;
+  width: 3rem;
+  height: 3rem;
+  padding: .7rem;
+  font-size: 2.3rem;
+  padding-top: 0;
+  cursor: pointer;
+  position:absolute;
+  right: .6rem;
+  top: 2rem;
+} */

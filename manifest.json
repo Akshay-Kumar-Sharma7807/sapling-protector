@@ -1,0 +1,37 @@
+{
+  "short_name": "SapPro",
+  "name": "Saplings Protector",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#da532c",
+  "background_color": "#da532c",
+  "orientation": "portrait-primary",
+  "categories": [
+    "enivironment",
+    "education",
+    "productivity"
+  ]
+}
