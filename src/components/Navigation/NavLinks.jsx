@@ -44,16 +44,18 @@ export function MainLink({ icon, color, label, link }) {
 }
 
 const data = [
+  { icon: <i className="bi bi-house" />, color: 'blue', label: 'Home', link: "/home" },
   {
-    icon: <i className="bi bi-sun" />, color: 'blue', label: 'My Day', link: "/tasks/my-day"
+    icon: <i className="bi bi-tree" />, color: 'green', label: 'My Trees', link: "/my-trees"
   },
-  { icon: <i className="bi bi-star" />, color: 'yellow', label: 'Important', link: "/tasks/important" },
-  { icon: <i className="bi bi-calendar3" />, color: 'violet', label: 'Planned', link: "/tasks/planned" },
-  { icon: <i className="bi bi-infinity" />, color: 'orange', label: 'All', link: "/tasks/all" },
-  { icon: <i className="bi bi-check-circle" />, color: 'teal', label: 'Completed', link: "/tasks/completed" },
+  { icon: <i className="bi bi-location" />, color: 'yellow', label: 'Trees Near Me', link: "/near" },
+  { icon: <i className="bi bi-calendar3" />, color: 'violet', label: 'Tasks', link: "/tasks" },
+  { icon: <i className="bi bi-infinity" />, color: 'orange', label: 'All', link: "/all" },
+  // { icon: <i className="bi bi-check-circle" />, color: 'teal', label: 'Completed', link: "/tasks/completed" },
   // { icon: <i className="bi bi-person" />, color: 'grape', label: 'Assigned to me', link: "/tasks/assigned-to-me" },
   // { icon: <i className="bi bi-clipboard-check" />, color: 'yellow', label: 'Tasks', link: "/tasks/inbox" },
-  { icon: <i className="bi bi-stars" />, color: 'pink', label: 'Starred', link: "/tasks/starred" },
+  { icon: <i className="bi bi-stars" />, color: 'pink', label: 'Donate', link: "/donate" },
+  { icon: <i className="bi bi-gear" />, color: 'gray', label: 'Settings', link: "/settings" },
 ];
 
 export function NavLinks() {

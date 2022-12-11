@@ -21,13 +21,13 @@ export default function Settings() {
     setOpen((o) => !o)
   }
   return (
-    <>
-      <Tooltip label="Settings" withArrow>
+    <Container>
+      {/* <Tooltip label="Settings" withArrow>
         <ActionIcon variant="default" onClick={() => toggleSettings()}>
           <i className='bi bi-gear'></i>
         </ActionIcon>
-      </Tooltip>
-      <Drawer
+      </Tooltip> */}
+      {/* <Drawer
         position="right"
         opened={open}
         onClose={() => setOpen((o) => !o)}
@@ -40,28 +40,28 @@ export default function Settings() {
             overflowY: "auto",
           }
         }}
-      >
-        <Title order={4} mb="sm">
-          General
-        </Title>
-        <Stack>
-          <Switch size="md" label="Turn on reminder notifications" name="notification"></Switch>
-          <Switch size="md" checked={completionSound} onChange={(e) => setCompletionSound(e.currentTarget.checked)} label="Play Completion Sound" name="notification"></Switch>
-        </Stack>
-        <Title order={4} my="sm">Smart Lists</Title>
-        <Stack>
-          <Switch size="md" checked={important} onChange={(e) => setImportant(e.target.checked)} label="Important" name="notification"></Switch>
-          <Switch size="md" checked={planned} onChange={(e) => setPlanned(e.target.checked)} label="Planned" name="notification"></Switch>
-          <Switch size="md" checked={all} onChange={(e) => setAll(e.target.checked)} label="All" name="notification"></Switch>
-          <Switch size="md" checked={completed} onChange={(e) => setCompleted(e.target.checked)} label="Completed" name="notification"></Switch>
-          <Switch size="md" checked={assigned} onChange={(e) => setAssigned(e.target.checked)} label="Assigned to me" name="notification"></Switch>
-        </Stack>
-        <Title order={4} my="sm">Notifications</Title>
-        <Stack>
-          <Switch size="md" checked={email} onChange={(e) => setEmail(e.target.checked)} label="Email" name="notification"></Switch>
-          <Switch size="md" checked={pushNotifications} onChange={(e) => setPushNotifications(e.target.value)} label="Push Notifications" name="notification"></Switch>
-        </Stack>
-      </Drawer>
-    </>
+      > */}
+      <Title order={4} mb="sm">
+        General
+      </Title>
+      <Stack>
+        <Switch size="md" label="Turn on reminder notifications" name="notification"></Switch>
+        <Switch size="md" checked={completionSound} onChange={(e) => setCompletionSound(e.currentTarget.checked)} label="Play Completion Sound" name="notification"></Switch>
+      </Stack>
+      <Title order={4} my="sm">Smart Lists</Title>
+      <Stack>
+        <Switch size="md" checked={important} onChange={(e) => setImportant(e.target.checked)} label="Important" name="notification"></Switch>
+        <Switch size="md" checked={planned} onChange={(e) => setPlanned(e.target.checked)} label="Planned" name="notification"></Switch>
+        <Switch size="md" checked={all} onChange={(e) => setAll(e.target.checked)} label="All" name="notification"></Switch>
+        <Switch size="md" checked={completed} onChange={(e) => setCompleted(e.target.checked)} label="Completed" name="notification"></Switch>
+        <Switch size="md" checked={assigned} onChange={(e) => setAssigned(e.target.checked)} label="Assigned to me" name="notification"></Switch>
+      </Stack>
+      <Title order={4} my="sm">Notifications</Title>
+      <Stack>
+        <Switch size="md" checked={email} onChange={(e) => setEmail(e.target.checked)} label="Email" name="notification"></Switch>
+        <Switch size="md" checked={pushNotifications} onChange={(e) => setPushNotifications(e.target.value)} label="Push Notifications" name="notification"></Switch>
+      </Stack>
+      {/* </Drawer> */}
+    </Container>
   )
 }

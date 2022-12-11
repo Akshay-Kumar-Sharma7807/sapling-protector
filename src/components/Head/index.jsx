@@ -33,7 +33,7 @@ export default function Head({ opened, setOpened }) {
 
           </Tooltip>
           <ThemeToggle />
-          <Settings />
+          {/* <Settings /> */}
           <About />
           <Account />
         </Group>

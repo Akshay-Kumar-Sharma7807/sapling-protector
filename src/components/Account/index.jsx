@@ -3,9 +3,11 @@ import React, { useState } from 'react'
 import { auth } from "../../firebase";
 import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider, signOut } from 'firebase/auth';
 import { useAuthState } from "react-firebase-hooks/auth";
+import { supabase } from "../../supabaseClient";
+
 
 export default function Account() {
-  const [user] = useAuthState(auth);
+  // const [user] = useAuthState(auth);
 
   const [open, setOpen] = useState();
   const toggleAccount = () => {
@@ -32,11 +34,8 @@ export default function Account() {
       })
   }
 
-  const logout = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("logout");
-      })
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut()
   }
 
   return (
