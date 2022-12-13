@@ -1,38 +1,96 @@
-import { ActionIcon, Aside, Avatar, Box, Button, Container, Drawer, Group, Stack, Switch, Text, Title, Tooltip, UnstyledButton } from '@mantine/core'
+import { ActionIcon, Aside, Avatar, Box, Button, Container, Drawer, Group, PasswordInput, Stack, Switch, Text, Title, Tooltip, UnstyledButton, TextInput, NavLink, Anchor, FileInput } from '@mantine/core'
 import React, { useState } from 'react'
 import { auth } from "../../firebase";
 import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider, signOut } from 'firebase/auth';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { supabase } from "../../supabaseClient";
-
+import { useForm } from "@mantine/form";
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { showNotification } from '@mantine/notifications';
+import SignUp from './SignUp';
 
 export default function Account() {
-  // const [user] = useAuthState(auth);
+  const [session, setSession] = useState(null)
+  const [createAccount, setCreateAccount] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
+  const form = useForm({
+    initialValues: {
+      email: "",
+      password: ""
+    },
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+    }
+  })
 
   const [open, setOpen] = useState();
   const toggleAccount = () => {
     setOpen((o) => !o)
   }
 
+  const [username, setUsername] = useState(null)
+  const [avatar_url, setAvatarUrl] = useState(null)
 
-  const signInGoogle = () => {
-    const googleProvider = new GoogleAuthProvider();
+  useEffect(() => {
+    getProfile()
+  }, [session])
 
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        console.log(result.user);
-      })
+  const getProfile = async () => {
+    try {
+      console.log(session)
+      const { user } = session
 
+      let { data, error, status } = await supabase
+        .from('profiles')
+        .select(`username, avatar_url`)
+        .eq('id', user.id)
+        .single()
+
+      if (data) {
+        setUsername(data.username)
+        downloadImage(data.avatar_url)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
-  const signInGithub = () => {
-    const githubProvider = new GithubAuthProvider();
 
-    signInWithPopup(auth, githubProvider)
-      .then((result) => {
-        console.log(result.user);
-      })
+  const downloadImage = async (path) => {
+    try {
+      const { data, error } = await supabase.storage.from('avatars').download(path)
+      if (error) {
+        throw error
+      }
+      const url = URL.createObjectURL(data)
+      setAvatarUrl(url)
+    } catch (error) {
+      console.log('Error downloading image: ', error.message)
+    }
   }
+
+
+
+
+  const signInEmail = async ({ email, password }) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    console.log(data, error)
+  }
+
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut()
@@ -46,7 +104,7 @@ export default function Account() {
           <i className='bi bi-person-circle'></i>
         </ActionIcon> */}
         <UnstyledButton>
-          <Avatar src={user?.photoURL} radius="xl" onClick={() => toggleAccount()}></Avatar>
+          <Avatar src={avatar_url} radius="xl" onClick={() => toggleAccount()}></Avatar>
 
         </UnstyledButton>
       </Tooltip>
@@ -64,7 +122,48 @@ export default function Account() {
           }
         }}
       >
-        {user ?
+        {
+          session ?
+            <Stack align="center">
+              <Avatar src={avatar_url} size="xl" radius="xl" />
+              <Title order={4}>Hi! {username}</Title>
+              <Button onClick={() => logout()}>Sign Out</Button>
+            </Stack>
+            :
+            <Stack>
+              <Text>You are not signed in</Text>
+              {createAccount ?
+                <SignUp setCreateAccount={setCreateAccount} />
+                :
+                <form onSubmit={form.onSubmit((values) => signInEmail(values))}>
+                  <Title order={3}>Login</Title>
+                  <TextInput
+                    withAsterisk
+                    label="Email"
+                    placeholder="your@email.com"
+                    {...form.getInputProps('email')}
+                  />
+
+                  <PasswordInput
+                    // mt="md"
+                    withAsterisk
+                    label="Password"
+                    placeholder="Top Secret"
+                    {...form.getInputProps('password')}
+                  />
+
+                  <Group position="center" mt="md">
+                    <Button type="submit">Login</Button>
+                  </Group>
+                  <Anchor onClick={() => setCreateAccount(true)}>Create New Account</Anchor>
+                </form>
+              }
+              {/* <Button>Sign up</Button> */}
+            </Stack>
+
+        }
+
+        {/* {user ?
           <Stack align="center">
             <Avatar src={user.photoURL} size="xl" radius="lg"></Avatar>
             <Box mb="lg">
@@ -85,7 +184,7 @@ export default function Account() {
               Continue with Github
             </Button>
           </Stack>
-        }
+        } */}
       </Drawer>
     </>
   )
