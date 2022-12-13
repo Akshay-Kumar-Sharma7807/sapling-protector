@@ -131,7 +131,6 @@ export default function Account() {
             </Stack>
             :
             <Stack>
-              <Text>You are not signed in</Text>
               {createAccount ?
                 <SignUp setCreateAccount={setCreateAccount} />
                 :
