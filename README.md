@@ -1,7 +1,8 @@
-# Todo App
-Organize your daily workflow with a modern style Todo App
+# Saplings Protetor
+Protect saplings that you grow by reminding you to take care of them and
+keeping track of them.
 
-Todo App url: [aks-todo.web.app](https://aks-todo.web.app) 
+Saplings Protector url: [https://saplings-protector.netlify.app/](https://saplings-protector.netlify.app/) 
 
 ## Installation
 ```
@@ -11,28 +12,12 @@ npm run dev
 This will open the app on ```localhost:3000```
 
 ## Features
+Under Development
 
-- Manage your daily tasks
-- Toggle between Light Theme and Dark Theme
-- Installable PWA 
-- Works Offline 📴
-- Blazingly fast ⚡
-- Synchronizes tasks to the server
-- Sends notifications for Due Tasks
 
 ## ScreenShots
+Work in progress
 
-Light Mode
-![Light Mode](/screenshots/todo-light.png)
-
-Dark Mode
-![Dark Mode](/screenshots/todo-dark.png)
-
-Edit Todos
-![Edit Todos](/screenshots/todo-edit.png)
-
-Add New Todos
-![Add New Todos](/screenshots/todo-add.png)
 ## Technologies
 
 - React for Frontend
@@ -41,4 +26,4 @@ Add New Todos
 - Workbox for service worker
 
 ## Live Demo
-[aks-todo.web.app](http://aks-todo.web.app)
+[https://saplings-protector.netlify.app/](https://saplings-protector.netlify.app/)

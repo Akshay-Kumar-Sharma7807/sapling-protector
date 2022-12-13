@@ -1,6 +1,6 @@
 {
-  "short_name": "Todo App",
-  "name": "Todo",
+  "short_name": "SapPro",
+  "name": "Saplings Protector",
   "icons": [
     {
       "src": "/favicon.ico",
@@ -29,5 +29,9 @@
   "theme_color": "#da532c",
   "background_color": "#da532c",
   "orientation": "portrait-primary",
-  "categories": ["books", "education", "productivity"]
+  "categories": [
+    "enivironment",
+    "education",
+    "productivity"
+  ]
 }
