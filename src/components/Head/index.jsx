@@ -34,7 +34,7 @@ export default function Head({ opened, setOpened }) {
           </Tooltip>
           <ThemeToggle />
           {/* <Settings /> */}
-          <About />
+          <About type="icon" />
           <Account />
         </Group>
       </div>

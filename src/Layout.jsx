@@ -21,6 +21,7 @@ import Settings from "./components/Settings";
 import Head from "./components/Head/";
 import Important from "./components/Todos/Important/";
 import Home from './components/Home';
+import NotFound404 from './NotFound404';
 
 
 export default function Layout() {
@@ -60,7 +61,7 @@ export default function Layout() {
     >
       <Routes>
         <Route path="/" element={
-          <Navigate to="/tasks/my-day" />
+          <Navigate to="/home" />
         } />
         <Route path="/home" element={
           <Home />
@@ -74,6 +75,7 @@ export default function Layout() {
 
         <Route path="/settings" element={<Settings />} />
         {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/*" element={<NotFound404 />} />
       </Routes>
     </AppShell>
   );
