@@ -1,8 +1,8 @@
-import { ActionIcon, Avatar, Anchor, Container, Drawer, Group, Switch, Text, Title, Tooltip, Button, ScrollArea, MediaQuery } from '@mantine/core'
+import { ActionIcon, Avatar, Anchor, Drawer, Group, Text, Title, Tooltip, Button } from '@mantine/core'
 import React, { useState } from 'react'
 import NavBtn from '../Navigation/NavBtn';
 
-export default function About({ type }) {
+export default function About({ type, ...others }) {
   const [open, setOpen] = useState();
   const toggleAbout = () => {
     setOpen((o) => !o)
@@ -11,18 +11,14 @@ export default function About({ type }) {
     <>
 
       {type === "icon" &&
-        <MediaQuery smallerThan={390} styles={{ display: 'none' }}>
-
-          <Tooltip label="About" withArrow>
-            <ActionIcon variant="default" onClick={() => toggleAbout()}>
-              <i className='bi bi-info-circle'></i>
-            </ActionIcon>
-          </Tooltip>
-
-        </MediaQuery>
+        <Tooltip label="About" withArrow {...others}>
+          <ActionIcon variant="default" onClick={() => toggleAbout()} >
+            <i className='bi bi-info-circle'></i>
+          </ActionIcon>
+        </Tooltip>
       }
       {type === "nav-btn" &&
-        <NavBtn icon={<i className="bi bi-info-circle"></i>} color="cyan" label="About" onClick={() => toggleAbout()} />
+        <NavBtn {...others} icon={<i className="bi bi-info-circle"></i>} color="indigo" label="About" onClick={() => toggleAbout()} />
       }
       <Drawer
         position="right"

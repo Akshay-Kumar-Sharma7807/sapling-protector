@@ -22,7 +22,7 @@ import Head from "./components/Head/";
 import Important from "./components/Todos/Important/";
 import Home from './components/Home';
 import NotFound404 from './NotFound404';
-
+import Tree from "./components/Tree/";
 
 export default function Layout() {
   const theme = useMantineTheme();
@@ -74,7 +74,7 @@ export default function Layout() {
         {/* <Route path="/tasks/inbox" element={<div>Tasks</div>} /> */}
 
         <Route path="/settings" element={<Settings />} />
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/tree/*" element={<Tree />} />
         <Route path="/*" element={<NotFound404 />} />
       </Routes>
     </AppShell>

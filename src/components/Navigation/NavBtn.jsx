@@ -6,9 +6,10 @@ import {
   Text,
 } from '@mantine/core'
 
-export default function NavBtn({ icon, color, label, onClick }) {
+export default function NavBtn({ icon, color, label, onClick, ...others }) {
   return (
     <UnstyledButton
+      {...others}
       onClick={onClick}
       sx={(theme) => ({
         display: 'block',

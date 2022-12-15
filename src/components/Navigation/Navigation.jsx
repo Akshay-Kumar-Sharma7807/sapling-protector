@@ -1,16 +1,12 @@
-import { Navbar, Text, Box, ThemeIcon, Group, UnstyledButton, ScrollArea, Divider, useMantineColorScheme } from "@mantine/core";
-import { NavLinks, MainLink } from "./NavLinks";
+import { Navbar, ScrollArea, Divider, useMantineColorScheme, MediaQuery } from "@mantine/core";
+import { NavLinks } from "./NavLinks";
 import NavBtn from "./NavBtn";
-import { useLocation } from "react-router-dom";
 
 import React from 'react'
-import ThemeToggle from "../Head/ThemeToggle";
 import About from "../About";
 
 export default function Navigation({ opened }) {
-  const location = useLocation();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  // console.log(location)
 
   const share = (e) => {
     let shareData = {
@@ -35,15 +31,15 @@ export default function Navigation({ opened }) {
           <NavLinks />
           <NavBtn icon={<i className="bi bi-share"></i>} color="cyan" label="Share" onClick={share} />
           <Divider my={4} />
-          <NavBtn icon={<i className={colorScheme === "dark" ? "bi bi-sun" : "bi bi-moon-stars"}></i>} color="cyan" label={colorScheme === "dark" ? "Light Mode" : "Dark Mode"} onClick={() => toggleColorScheme()} />
-          <About type="nav-btn" />
-          {/* <Group p="md">
-            <ThemeToggle />
-            <About />
-          </Group> */}
+          <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+            <span>
+              <NavBtn icon={<i className={colorScheme === "dark" ? "bi bi-sun" : "bi bi-moon-stars"}></i>} color="yellow" label={colorScheme === "dark" ? "Light Mode" : "Dark Mode"} onClick={() => toggleColorScheme()} />
+              <About type="nav-btn" />
+            </span>
+          </MediaQuery>
         </Navbar.Section>
 
       </ScrollArea>
-    </Navbar>
+    </Navbar >
   )
 }

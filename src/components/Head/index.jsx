@@ -30,11 +30,13 @@ export default function Head({ opened, setOpened }) {
             <ActionIcon onClick={() => spotlight.openSpotlight()} variant="default">
               <i className='bi bi-search'></i>
             </ActionIcon>
-
           </Tooltip>
-          <ThemeToggle />
-          {/* <Settings /> */}
-          <About type="icon" />
+          <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+            <Group>
+              <ThemeToggle />
+              <About type="icon" />
+            </Group>
+          </MediaQuery>
           <Account />
         </Group>
       </div>
