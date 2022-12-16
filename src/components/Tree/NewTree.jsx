@@ -2,9 +2,12 @@ import { Avatar, Button, FileInput, Group, Image, NumberInput, Stack, TextInput,
 import { useForm } from '@mantine/form';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import { supabase } from '../../supabaseClient';
 
 export default function NewTree() {
     const [image, setImage] = useState("");
+
+
     const form = useForm({
         initialValues: {
             name: "",
@@ -18,9 +21,25 @@ export default function NewTree() {
         }
     })
 
+    const createTree = async ({ name, location, type, age }) => {
+        // console.log(name)
+        const { data: { user } } = await supabase.auth.getUser()
+        const { data, error } = await supabase
+            .from('trees')
+            .insert([
+                {
+                    name: "Neem",
+                    location: "India",
+                    type: "neem",
+                    age: 10,
+                },
+            ])
+        console.log(data, error)
+    }
+
 
     return (
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values) => createTree(values))}>
             <Stack gap={4}>
 
                 <Title order={3}>Add New Tree</Title>

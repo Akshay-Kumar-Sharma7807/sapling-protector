@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AppShell,
   Navbar,
@@ -23,10 +23,23 @@ import Important from "./components/Todos/Important/";
 import Home from './components/Home';
 import NotFound404 from './NotFound404';
 import Tree from "./components/Tree/";
+import { supabase } from './supabaseClient';
 
 export default function Layout() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+  // const [user, setUser] = useState(null);
+  const [session, setSession] = useState(null)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
 
   return (
     <AppShell
@@ -50,11 +63,11 @@ export default function Layout() {
       //     </Aside>
       //   </MediaQuery>
       // }
-      // footer={
-      //   <Footer height={60} p="md">
-      //     Application footer
-      //   </Footer>
-      // }
+      footer={
+        <Footer height={60} p="md">
+          Application footer
+        </Footer>
+      }
       header={
         <Head setOpened={setOpened} opened={opened} />
       }
@@ -64,7 +77,7 @@ export default function Layout() {
           <Navigate to="/home" />
         } />
         <Route path="/home" element={
-          <Home />
+          <Home user={session?.user} />
         } />
         {/* <Route path="/tasks/important" element={<Important />} /> */}
         {/* <Route path="/tasks/planned" element={<div>Planned</div>} /> */}
