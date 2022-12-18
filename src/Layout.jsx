@@ -63,11 +63,11 @@ export default function Layout() {
       //     </Aside>
       //   </MediaQuery>
       // }
-      footer={
-        <Footer height={60} p="md">
-          Application footer
-        </Footer>
-      }
+      // footer={
+      //   <Footer height={60} p="md">
+      //     Application footer
+      //   </Footer>
+      // }
       header={
         <Head setOpened={setOpened} opened={opened} />
       }
