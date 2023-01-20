@@ -2,13 +2,27 @@ import { Avatar, Button, FileInput, Group, Image, LoadingOverlay, NumberInput, S
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { showNotification, updateNotification } from '@mantine/notifications';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
+import { LocationPicker } from "niwa-location-picker";
+import "./style.css";
 
 export default function NewTree() {
     const [image, setImage] = useState();
     const [loader, setLoader] = useState(false);
+
+    useEffect(() => {
+        const locationPicker = new LocationPicker('#map');
+
+        console.log(locationPicker)
+
+    }, [])
+    // let lp = new LocationPicker('map', {
+    //     setCurrentPosition: true, // You can omit this, defaults to true
+    // }, {
+    //     zoom: 15 // You can set any google map options here, zoom defaults to 15
+    // });
 
     const form = useForm({
         initialValues: {
@@ -107,6 +121,8 @@ export default function NewTree() {
                     placeholder="location"
                     {...form.getInputProps('location')}
                 />
+
+                <div id="map"></div>
 
                 <TextInput
                     // mt="md"
