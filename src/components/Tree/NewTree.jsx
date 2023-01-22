@@ -1,4 +1,4 @@
-import { Avatar, Button, FileInput, Group, Image, LoadingOverlay, NumberInput, Stack, TextInput, Title } from '@mantine/core'
+import { AspectRatio, Avatar, Button, FileInput, Group, Image, LoadingOverlay, NumberInput, Stack, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { showNotification, updateNotification } from '@mantine/notifications';
@@ -12,12 +12,7 @@ export default function NewTree() {
     const [image, setImage] = useState();
     const [loader, setLoader] = useState(false);
 
-    useEffect(() => {
-        const locationPicker = new LocationPicker('#map');
 
-        console.log(locationPicker)
-
-    }, [])
     // let lp = new LocationPicker('map', {
     //     setCurrentPosition: true, // You can omit this, defaults to true
     // }, {
@@ -30,10 +25,12 @@ export default function NewTree() {
             location: "",
             type: "",
             age: 0,
+            position: [],
         },
         validate: {
             name: (value) => value.length > 3 ? null : "Too short name",
             age: (value) => value >= 0 && value <= 10000 ? null : "Invalid Age",
+            position: (value) => value.length == 2 ? null : "invalid postion",
         }
     })
 
@@ -98,6 +95,43 @@ export default function NewTree() {
         })
     }
 
+    useEffect(() => {
+        document.querySelector("#map").innerHTML = "";
+        const locationPicker = new LocationPicker('#map', {
+            height: 350
+        });
+
+
+        locationPicker.addEventListener('MAP_CENTERED_ON_ADDRESS', (pos) => {
+            console.log('Lon Lat', pos.detail)
+        });
+
+        locationPicker.addEventListener('BROWSER_GEOLOCATED', (pos) => {
+            // console.log(pos)
+            let { latitude, longitude } = pos.detail.msg
+            // console.log(lat, lon)
+            locationPicker.removeAllMarkers()
+            locationPicker.addMarker(longitude, latitude, "#4444ff")
+            form.setValues({
+                position: [latitude, longitude],
+            })
+
+
+        });
+
+
+        locationPicker.addEventListener('CLICKED_ON_LONLAT', (pos) => {
+            let { lat, lon } = pos.detail.coords
+            console.log(lat, lon)
+            locationPicker.removeAllMarkers()
+            locationPicker.addMarker(lon, lat, "#4444ff")
+            form.setValues({
+                position: [lat, lon],
+            })
+        })
+
+    }, [])
+
     return (
         <form onSubmit={form.onSubmit((values) => createTree(values))} >
             <Stack gap={4} style={{ position: "relative" }} p="sm">
@@ -122,7 +156,10 @@ export default function NewTree() {
                     {...form.getInputProps('location')}
                 />
 
+                {/* <AspectRatio ratio={16 / 9}> */}
                 <div id="map"></div>
+
+                {/* </AspectRatio> */}
 
                 <TextInput
                     // mt="md"
