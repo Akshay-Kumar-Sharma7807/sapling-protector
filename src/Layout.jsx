@@ -24,6 +24,8 @@ import Home from './components/Home';
 import NotFound404 from './NotFound404';
 import Tree from "./components/Tree/";
 import { supabase } from './supabaseClient';
+import { PrivateRoute } from './PrivateRoute';
+
 
 export default function Layout() {
   const theme = useMantineTheme();
@@ -86,7 +88,7 @@ export default function Layout() {
         {/* <Route path="/tasks/assigned-to-me" element={<div>Assigned To Me</div>} /> */}
         {/* <Route path="/tasks/inbox" element={<div>Tasks</div>} /> */}
 
-        <Route path="/settings" element={<Settings />} />
+        {/* <PrivateRoute path="/settings" element={<Settings />} /> */}
         <Route path="/tree/*" element={<Tree />} />
         <Route path="/*" element={<NotFound404 />} />
       </Routes>

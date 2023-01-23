@@ -10,6 +10,8 @@ import { db, auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { SpotlightProvider } from "@mantine/spotlight";
 import { useDocumentVisibility } from "@mantine/hooks";
+import { AuthProvider } from "./contexts/Auth"
+
 
 function App() {
   const [todos, setTodos] = useLocalStorage({
@@ -86,12 +88,14 @@ function App() {
               onTrigger: () => console.log("trigger")
             }
           })}>
-            <Router>
-              <div className={"App"}>
-                <ReloadPrompt />
-                <Layout />
-              </div>
-            </Router>
+            <AuthProvider>
+              <Router>
+                <div className={"App"}>
+                  <ReloadPrompt />
+                  <Layout />
+                </div>
+              </Router>
+            </AuthProvider>
 
           </SpotlightProvider>
         </NotificationsProvider>
