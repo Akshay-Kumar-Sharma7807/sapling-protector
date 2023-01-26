@@ -34,7 +34,7 @@ export default function NewTree() {
         }
     })
 
-    const createTree = async ({ name, location, type, age }) => {
+    const createTree = async ({ name, location, type, age, position }) => {
         // setLoader(true)
         showNotification({
             id: 'create-tree',
@@ -72,6 +72,7 @@ export default function NewTree() {
                     age,
                     user_id: user.id,
                     display_image: url,
+                    position,
                 },
             ])
         console.log(data, error)
