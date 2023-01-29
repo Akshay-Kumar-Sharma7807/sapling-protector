@@ -25,6 +25,7 @@ import NotFound404 from './NotFound404';
 import Tree from "./components/Tree/";
 import { supabase } from './supabaseClient';
 import { PrivateRoute } from './PrivateRoute';
+import About from './components/About';
 
 
 export default function Layout() {
@@ -90,6 +91,7 @@ export default function Layout() {
 
         {/* <PrivateRoute path="/settings" element={<Settings />} /> */}
         <Route path="/tree/*" element={<Tree />} />
+        <Route path="/about" element={<About />} />
         <Route path="/*" element={<NotFound404 />} />
       </Routes>
     </AppShell>

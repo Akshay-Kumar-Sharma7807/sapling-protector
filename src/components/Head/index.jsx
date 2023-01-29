@@ -34,7 +34,7 @@ export default function Head({ opened, setOpened }) {
           <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
             <Group>
               <ThemeToggle />
-              <About type="icon" />
+              {/* <About type="icon" /> */}
             </Group>
           </MediaQuery>
           <Account />

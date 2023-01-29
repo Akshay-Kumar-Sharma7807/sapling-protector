@@ -68,24 +68,25 @@ export default function Home({ user }) {
                 }
 
                 {trees.map((tree) => (
-                    <Paper p="sm" sx={{ width: "100%" }} shadow="md" radius="md" mt="xs" key={tree.id} >
+                    <Link to={`/tree/${tree.id}`}>
+                        <Paper p="sm" sx={{ width: "100%" }} shadow="md" radius="md" mt="xs" key={tree.id} >
 
-                        <Group key={tree.id} size="lg">
-                            <Image src={tree.url} width={60}
-                                height={60}
-                                fit="cover" radius="md" />
-                            {/* <Checkbox onChange={(e) => completeTodo(e, todo.id)}
+                            <Group key={tree.id} size="lg">
+                                <Image src={tree.url} width={60}
+                                    height={60}
+                                    fit="cover" radius="md" />
+                                {/* <Checkbox onChange={(e) => completeTodo(e, todo.id)}
                                 radius="xl"
                                 checked={todo.completed} /> */}
 
-                            <UnstyledButton
-                                sx={{ flex: 1 }}
-                            // onClick={() => { openEditMenu(todo.id) }}
-                            >
-                                <Title>{tree.name}</Title>
-                                <Text>{tree.type}</Text>
-                            </UnstyledButton>
-                            {/* <ActionIcon
+                                <UnstyledButton
+                                    sx={{ flex: 1 }}
+                                // onClick={() => { openEditMenu(todo.id) }}
+                                >
+                                    <Title>{tree.name}</Title>
+                                    <Text>{tree.type}</Text>
+                                </UnstyledButton>
+                                {/* <ActionIcon
                                 color="blue"
                                 variant="subtle"
                             onClick={() => starTodo(todo.id)}
@@ -99,8 +100,9 @@ export default function Home({ user }) {
                             >
                                 <i className={`bi bi-trash`} size={16} />
                             </ActionIcon> */}
-                        </Group>
-                    </Paper>
+                            </Group>
+                        </Paper>
+                    </Link>
                 ))}
             </Stack>
         </Container>
