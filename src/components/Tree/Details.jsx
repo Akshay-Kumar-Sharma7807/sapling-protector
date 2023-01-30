@@ -21,7 +21,7 @@ export default function Details() {
     let map = null;
     useEffect(() => {
         // if (tree && map == null) {
-        if (imageURL && document.querySelector("#map").innerHTML == "") {
+        if (tree?.position && imageURL && document.querySelector("#map").innerHTML == "") {
             map = L.map('map').setView(tree.position, 13);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
@@ -72,8 +72,12 @@ export default function Details() {
                     <Text>Location: {tree.location}</Text>
                     <Text>Type: {tree.type}</Text>
 
-                    <Title order={3} my={2}>Position</Title>
-                    <div id="map" style={{ height: 300 }}></div>
+                    {tree?.position &&
+                        <Stack>
+                            <Title order={3} my={2}>Position</Title>
+                            <div id="map" style={{ height: 300 }}></div>
+                        </Stack>
+                    }
                 </Stack>
                 :
                 <Stack align="center">
