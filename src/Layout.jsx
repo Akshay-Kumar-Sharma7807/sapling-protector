@@ -26,6 +26,7 @@ import Tree from "./components/Tree/";
 import { supabase } from './supabaseClient';
 import { PrivateRoute } from './PrivateRoute';
 import About from './components/About';
+import { useLocation } from 'react-router-dom';
 
 
 export default function Layout() {
@@ -33,6 +34,11 @@ export default function Layout() {
   const [opened, setOpened] = useState(false);
   // const [user, setUser] = useState(null);
   const [session, setSession] = useState(null)
+  const location = useLocation();
+
+  useEffect(() => {
+    setOpened(false)
+  }, [location])
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {

@@ -18,19 +18,21 @@ export default function Details() {
         getTree(treeId)
     }, [])
 
-    // let map = null;
-    // useEffect(() => {
-    //     // if (tree && map == null) {
-    //     if (imageURL) {
-    //         map = L.map('map').setView(tree.position, 13);
-    //         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //             maxZoom: 19,
-    //             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    //         }).addTo(map);
-    //         var marker = L.marker(tree.position).addTo(map);
-    //     }
-    //     // }
-    // }, [imageURL])
+    let map = null;
+    useEffect(() => {
+        // if (tree && map == null) {
+        if (imageURL && document.querySelector("#map").innerHTML == "") {
+            map = L.map('map').setView(tree.position, 13);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+            var marker = L.marker(tree.position).addTo(map)
+                .bindPopup(`${tree.name} tree is here`)
+                .openPopup();
+        }
+        // }
+    }, [imageURL])
 
     async function getTree(treeId) {
         let { data: tree, error } = await supabase
@@ -65,9 +67,13 @@ export default function Details() {
                 <Stack>
                     <Title>{tree.name}</Title>
                     <Image alt={tree.name} src={imageURL} />
+
+                    <Title order={3}>Details</Title>
                     <Text>Location: {tree.location}</Text>
                     <Text>Type: {tree.type}</Text>
-                    {/* <div id="map" style={{ height: 300 }}></div> */}
+
+                    <Title order={3} my={2}>Position</Title>
+                    <div id="map" style={{ height: 300 }}></div>
                 </Stack>
                 :
                 <Stack align="center">

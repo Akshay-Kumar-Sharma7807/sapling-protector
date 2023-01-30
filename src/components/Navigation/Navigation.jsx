@@ -8,6 +8,7 @@ import About from "../About";
 export default function Navigation({ opened }) {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
+
   const share = (e) => {
     let shareData = {
       title: "AKS TODO",
@@ -34,7 +35,7 @@ export default function Navigation({ opened }) {
           <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
             <span>
               <NavBtn icon={<i className={colorScheme === "dark" ? "bi bi-sun" : "bi bi-moon-stars"}></i>} color="yellow" label={colorScheme === "dark" ? "Light Mode" : "Dark Mode"} onClick={() => toggleColorScheme()} />
-              <About type="nav-btn" />
+              {/* <About type="nav-btn" /> */}
             </span>
           </MediaQuery>
         </Navbar.Section>
