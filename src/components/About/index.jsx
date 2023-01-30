@@ -8,7 +8,7 @@ export default function About({ type, ...others }) {
     setOpen((o) => !o)
   }
   return (
-    <Stack gap="sm">
+    <Stack gap="sm" p="sm">
 
       <Title order={2} mb="md">
         Saplings Protector

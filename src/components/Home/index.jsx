@@ -1,4 +1,4 @@
-import { Container, Center, Image, Text, Stack, Title, Button, Paper, Avatar, Group, UnstyledButton, ActionIcon } from '@mantine/core'
+import { Container, Center, Image, Text, Stack, Title, Button, Paper, Avatar, Group, UnstyledButton, ActionIcon, Anchor } from '@mantine/core'
 import { DatePickerBase } from '@mantine/dates';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
@@ -6,10 +6,7 @@ import nature from "../../assets/undraw_nature_m5ll.svg";
 import { supabase } from '../../supabaseClient';
 
 export default function Home({ user }) {
-    const [trees, setTrees] = useState([{
-        name: "My Tree",
-        location: "india"
-    }]);
+    const [trees, setTrees] = useState([]);
 
     const getTrees = async () => {
         console.log(user)
@@ -68,7 +65,7 @@ export default function Home({ user }) {
                 }
 
                 {trees.map((tree) => (
-                    <Link to={`/tree/${tree.id}`}>
+                    <Anchor component={Link} to={`/tree/${tree.id}`} sx={{ width: "100%" }}>
                         <Paper p="sm" sx={{ width: "100%" }} shadow="md" radius="md" mt="xs" key={tree.id} >
 
                             <Group key={tree.id} size="lg">
@@ -83,8 +80,8 @@ export default function Home({ user }) {
                                     sx={{ flex: 1 }}
                                 // onClick={() => { openEditMenu(todo.id) }}
                                 >
-                                    <Title>{tree.name}</Title>
-                                    <Text>{tree.type}</Text>
+                                    <Title order={2}>{tree.name}</Title>
+                                    <Text weight="bold">{tree.type}</Text>
                                 </UnstyledButton>
                                 {/* <ActionIcon
                                 color="blue"
@@ -102,7 +99,7 @@ export default function Home({ user }) {
                             </ActionIcon> */}
                             </Group>
                         </Paper>
-                    </Link>
+                    </Anchor>
                 ))}
             </Stack>
         </Container>

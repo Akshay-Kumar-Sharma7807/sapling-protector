@@ -6,13 +6,15 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { supabase } from "../../supabaseClient";
 import { useForm } from "@mantine/form";
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { showNotification } from '@mantine/notifications';
 import SignUp from './SignUp';
 
 export default function Account() {
   const [session, setSession] = useState(null)
   const [createAccount, setCreateAccount] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -23,6 +25,13 @@ export default function Account() {
       setSession(session)
     })
   }, [])
+
+  useEffect(() => {
+    if (location.pathname == '/login') {
+      setOpen(true)
+    }
+  }, [location])
+
 
   const form = useForm({
     initialValues: {
@@ -88,7 +97,10 @@ export default function Account() {
       email,
       password,
     })
-    console.log(data, error)
+    // console.log(data, error)
+    if (location.pathname == '/login') {
+      navigate("/home")
+    }
   }
 
 

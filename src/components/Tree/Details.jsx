@@ -3,18 +3,34 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { supabase } from '../../supabaseClient';
+// import L from 'leaflet';
+
 
 
 export default function Details() {
     const { treeId } = useParams();
     const [tree, setTree] = useState();
-    const [imageURL, setImageURL] = useState("");
+    const [imageURL, setImageURL] = useState();
 
 
     useEffect(() => {
 
         getTree(treeId)
     }, [])
+
+    // let map = null;
+    // useEffect(() => {
+    //     // if (tree && map == null) {
+    //     if (imageURL) {
+    //         map = L.map('map').setView(tree.position, 13);
+    //         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //             maxZoom: 19,
+    //             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    //         }).addTo(map);
+    //         var marker = L.marker(tree.position).addTo(map);
+    //     }
+    //     // }
+    // }, [imageURL])
 
     async function getTree(treeId) {
         let { data: tree, error } = await supabase
@@ -37,6 +53,7 @@ export default function Details() {
             }
             const url = URL.createObjectURL(data)
             setImageURL(url)
+
         } catch (error) {
             console.log('Error downloading image: ', error.message)
         }
@@ -50,6 +67,7 @@ export default function Details() {
                     <Image alt={tree.name} src={imageURL} />
                     <Text>Location: {tree.location}</Text>
                     <Text>Type: {tree.type}</Text>
+                    {/* <div id="map" style={{ height: 300 }}></div> */}
                 </Stack>
                 :
                 <Stack align="center">
