@@ -12,10 +12,11 @@ import {
   Title,
   Group,
   ActionIcon,
+  Image,
 } from '@mantine/core';
 import Todos from './components/Todos/';
 import Navigation from './components/Navigation/Navigation';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Settings from "./components/Settings";
 // import Login from "./components/Login";
 import Head from "./components/Head/";
@@ -27,14 +28,22 @@ import { supabase } from './supabaseClient';
 import { PrivateRoute } from './PrivateRoute';
 import About from './components/About';
 import { useLocation } from 'react-router-dom';
+import { SpotlightProvider } from '@mantine/spotlight';
+import { useLocalStorage } from '@mantine/hooks';
 
 
 export default function Layout() {
   const theme = useMantineTheme();
+
+  const [trees, setTrees] = useLocalStorage({
+    key: 'trees',
+    defaultValue: [],
+  });
   const [opened, setOpened] = useState(false);
   // const [user, setUser] = useState(null);
   const [session, setSession] = useState(null)
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setOpened(false)
@@ -51,55 +60,66 @@ export default function Layout() {
   }, [])
 
   return (
-    <AppShell
-      styles={{
-        main: {
-          background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-        },
-      }}
-      navbarOffsetBreakpoint="sm"
-      asideOffsetBreakpoint="sm"
-      fixed
-      navbar={
-        <Navigation opened={opened}>
-          <Text>Application navbar</Text>
-        </Navigation>
+    <SpotlightProvider shortcut={['mod + P', 'mod + K', '/']} actions={trees.map(tree => {
+      return {
+        title: tree.name,
+        onTrigger: () => navigate(`/tree/${tree.id}`),
+        icon: <Image src={tree.url} width={30} height={30} radius="sm" />
       }
-      // aside={
-      //   <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
-      //     <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
-      //       <Text>Application sidebar</Text>
-      //     </Aside>
-      //   </MediaQuery>
-      // }
-      // footer={
-      //   <Footer height={60} p="md">
-      //     Application footer
-      //   </Footer>
-      // }
-      header={
-        <Head setOpened={setOpened} opened={opened} />
-      }
-    >
-      <Routes>
-        <Route path="/" element={
-          <Navigate to="/home" />
-        } />
-        <Route path="/home" element={
-          <Home user={session?.user} />
-        } />
-        {/* <Route path="/tasks/important" element={<Important />} /> */}
-        {/* <Route path="/tasks/planned" element={<div>Planned</div>} /> */}
-        {/* <Route path="/tasks/all" element={<div>all</div>} /> */}
-        {/* <Route path="/tasks/completed" element={<div>Completed</div>} /> */}
-        {/* <Route path="/tasks/assigned-to-me" element={<div>Assigned To Me</div>} /> */}
-        {/* <Route path="/tasks/inbox" element={<div>Tasks</div>} /> */}
+    })}>
+      <AppShell
+        styles={{
+          main: {
+            background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+          },
+        }}
+        navbarOffsetBreakpoint="sm"
+        asideOffsetBreakpoint="sm"
+        fixed
+        navbar={
+          <Navigation opened={opened}>
+            <Text>Application navbar</Text>
+          </Navigation>
+        }
+        // aside={
+        //   <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+        //     <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
+        //       <Text>Application sidebar</Text>
+        //     </Aside>
+        //   </MediaQuery>
+        // }
+        // footer={
+        //   <Footer height={60} p="md">
+        //     Application footer
+        //   </Footer>
+        // }
+        header={
+          <Head setOpened={setOpened} opened={opened} />
+        }
+      >
+        <Routes>
+          <Route path="/" element={
+            <Navigate to="/home" />
+          } />
+          <Route path="/home" element={
+            <Home user={session?.user} />
+          } />
+          {/* <Route path="/tasks/important" element={<Important />} /> */}
+          {/* <Route path="/tasks/planned" element={<div>Planned</div>} /> */}
+          {/* <Route path="/tasks/all" element={<div>all</div>} /> */}
+          {/* <Route path="/tasks/completed" element={<div>Completed</div>} /> */}
+          {/* <Route path="/tasks/assigned-to-me" element={<div>Assigned To Me</div>} /> */}
+          {/* <Route path="/tasks/inbox" element={<div>Tasks</div>} /> */}
 
-        {/* <PrivateRoute path="/settings" element={<Settings />} /> */}
-        <Route path="/tree/*" element={<Tree />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/*" element={<NotFound404 />} />
-      </Routes>
-    </AppShell>
+          <Route path="/settings" element={
+            <PrivateRoute>
+              <Settings />
+            </PrivateRoute>} />
+          <Route path="/tree/*" element={<Tree />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/*" element={<NotFound404 />} />
+        </Routes>
+      </AppShell>
+    </SpotlightProvider>
   );
 }

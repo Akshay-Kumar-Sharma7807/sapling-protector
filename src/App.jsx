@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import Layout from "./Layout"
-import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
+import { MantineProvider, ColorSchemeProvider, Image } from '@mantine/core';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import ReloadPrompt from "./components/ReloadPrompt"
 import { NotificationsProvider, showNotification } from '@mantine/notifications';
@@ -14,56 +14,46 @@ import { AuthProvider } from "./contexts/Auth"
 
 
 function App() {
-  const [todos, setTodos] = useLocalStorage({
-    key: 'todos',
-    defaultValue: [],
-  });
-  const [user] = useAuthState(auth);
+  // const [user] = useAuthState(auth);
   const documentState = useDocumentVisibility();
-  let myWorker = null;
-  if (window.Worker) {
-    myWorker = new Worker('/worker.js');
-  }
+  // let myWorker = null;
+  // if (window.Worker) {
+  //   myWorker = new Worker('/worker.js');
+  // }
 
-  myWorker.onmessage = (e) => {
+  // myWorker.onmessage = (e) => {
 
-    const todo = e.data;
+  //   const todo = e.data;
 
 
-    setTodos(todos.map((t) => {
-      if (t.id === todo.id) {
-        t.notified = true;
-      }
-      return t;
-    }))
 
-    if (documentState !== "hidden") {
-      showNotification({
-        title: "Due Task",
-        message: `HEY! Your task "${todo.task}" is now overdue.`,
-      })
-    }
+  // if (documentState !== "hidden") {
+  //   showNotification({
+  //     title: "Due Task",
+  //     message: `HEY! Your task "${todo.task}" is now overdue.`,
+  //   })
+  // }
 
-    if (Notification.permission === "granted") {
-      const text = `HEY! Your task "${todo.task}" is now overdue.`;
-      const notification = new Notification('To do list', { body: text });
-    }
-    else {
-      Notification.requestPermission().then(result => {
-        const text = `HEY! Your task "${todo.task}" is now overdue.`;
-        const notification = new Notification('To do list', { body: text });
-      })
-    }
+  // if (Notification.permission === "granted") {
+  //   const text = `HEY! Your task "${todo.task}" is now overdue.`;
+  //   const notification = new Notification('To do list', { body: text });
+  // }
+  // else {
+  //   Notification.requestPermission().then(result => {
+  //     const text = `HEY! Your task "${todo.task}" is now overdue.`;
+  //     const notification = new Notification('To do list', { body: text });
+  //   })
+  // }
 
-    // todos[todo.index].notified
+  // todos[todo.index].notified
 
-    updateDoc(doc(db, "Users", user.uid, "Tasks", todo.id), { notified: true })
-  }
+  // updateDoc(doc(db, "Users", user.uid, "Tasks", todo.id), { notified: true })
+  // }
 
   // every time the todos update check for deadlines
-  useEffect(() => {
-    myWorker.postMessage(todos);
-  }, [todos])
+  // useEffect(() => {
+  //   myWorker.postMessage(todos);
+  // }, [todos])
 
 
 
@@ -82,22 +72,16 @@ function App() {
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <NotificationsProvider>
 
-          <SpotlightProvider shortcut={['mod + P', 'mod + K', '/']} actions={todos.map(todo => {
-            return {
-              title: todo.task,
-              onTrigger: () => console.log("trigger")
-            }
-          })}>
-            <AuthProvider>
-              <Router>
-                <div className={"App"}>
-                  <ReloadPrompt />
-                  <Layout />
-                </div>
-              </Router>
-            </AuthProvider>
 
-          </SpotlightProvider>
+          <AuthProvider>
+            <Router>
+              <div className={"App"}>
+                <ReloadPrompt />
+                <Layout />
+              </div>
+            </Router>
+          </AuthProvider>
+
         </NotificationsProvider>
       </MantineProvider>
     </ColorSchemeProvider>

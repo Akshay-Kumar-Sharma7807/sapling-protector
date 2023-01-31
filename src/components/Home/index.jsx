@@ -1,12 +1,16 @@
 import { Container, Center, Image, Text, Stack, Title, Button, Paper, Avatar, Group, UnstyledButton, ActionIcon, Anchor } from '@mantine/core'
 import { DatePickerBase } from '@mantine/dates';
+import { useLocalStorage } from '@mantine/hooks';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import nature from "../../assets/undraw_nature_m5ll.svg";
 import { supabase } from '../../supabaseClient';
 
 export default function Home({ user }) {
-    const [trees, setTrees] = useState([]);
+    const [trees, setTrees] = useLocalStorage({
+        key: "trees",
+        defaultValue: []
+    });
 
     const getTrees = async () => {
         console.log(user)

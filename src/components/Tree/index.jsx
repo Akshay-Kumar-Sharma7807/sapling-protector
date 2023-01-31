@@ -13,7 +13,6 @@ export default function Tree() {
                 <Route path="new" element={
                     <PrivateRoute>
                         <NewTree />
-
                     </PrivateRoute>
                 } />
 

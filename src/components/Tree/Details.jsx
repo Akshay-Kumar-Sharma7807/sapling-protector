@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { supabase } from '../../supabaseClient';
 // import L from 'leaflet';
+import dayjs from 'dayjs';
 
 
 
@@ -71,6 +72,7 @@ export default function Details() {
                     <Title order={3}>Details</Title>
                     <Text>Location: {tree.location}</Text>
                     <Text>Type: {tree.type}</Text>
+                    <Text>Created on: {dayjs(tree.created_at).format("DD MMMM YYYY")}</Text>
 
                     {tree?.position &&
                         <Stack>
