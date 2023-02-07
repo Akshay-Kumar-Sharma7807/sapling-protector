@@ -30,6 +30,7 @@ import About from './components/About';
 import { useLocation } from 'react-router-dom';
 import { SpotlightProvider } from '@mantine/spotlight';
 import { useLocalStorage } from '@mantine/hooks';
+import MyTrees from "./components/Tree/MyTrees";
 
 
 export default function Layout() {
@@ -116,6 +117,12 @@ export default function Layout() {
               <Settings />
             </PrivateRoute>} />
           <Route path="/tree/*" element={<Tree />} />
+          <Route path="/my-trees/*" element={
+            <PrivateRoute>
+              <MyTrees />
+            </PrivateRoute>
+
+          } />
           <Route path="/about" element={<About />} />
           <Route path="/*" element={<NotFound404 />} />
         </Routes>

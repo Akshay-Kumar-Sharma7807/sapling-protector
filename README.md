@@ -51,6 +51,11 @@ This will open the app on ```localhost:3000```
 ### Details of a Tree
 ![Details of a Tree](/screenshots/sap-details.png)
 
+## Video Demo
+[![Saplings Protector video demo](https://img.youtube.com/vi/70Ohl1cTj4M/0.jpg)](https://www.youtube.com/watch?v=70Ohl1cTj4M)
+
+https://youtu.be/70Ohl1cTj4M
+
 ## Technologies
 
 - React for Frontend
