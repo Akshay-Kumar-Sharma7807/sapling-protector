@@ -32,7 +32,7 @@ import { SpotlightProvider } from '@mantine/spotlight';
 import { useLocalStorage } from '@mantine/hooks';
 import MyTrees from "./components/Tree/MyTrees";
 import Donate from "./components/Donate/Donate";
-
+import Profile from "./components/Profile";
 
 export default function Layout() {
   const theme = useMantineTheme();
@@ -117,6 +117,12 @@ export default function Layout() {
             <PrivateRoute>
               <Settings />
             </PrivateRoute>} />
+
+          <Route path="/profile" element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>} />
+
           <Route path="/tree/*" element={<Tree />} />
           <Route path="/my-trees/*" element={
             <PrivateRoute>

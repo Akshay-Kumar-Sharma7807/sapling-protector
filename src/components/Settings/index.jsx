@@ -1,8 +1,12 @@
-import { ActionIcon, Alert, Aside, Container, Divider, Drawer, Group, Stack, Switch, Text, Title, Tooltip } from '@mantine/core'
+import { ActionIcon, Alert, Aside, Button, Container, Divider, Drawer, Group, Image, Stack, Switch, Text, Title, Tooltip } from '@mantine/core'
 import React, { useState } from 'react'
+import { useAuth } from "../../contexts/Auth";
+import { Link } from 'react-router-dom';
 
 export default function Settings() {
   const [open, setOpen] = useState();
+  const { user } = useAuth();
+  console.log(user)
 
   // Settings state
   const [completionSound, setCompletionSound] = useState(true);
@@ -22,6 +26,15 @@ export default function Settings() {
   }
   return (
     <Container>
+      <Title align='center'>Settings</Title>
+
+      {/* <Stack my="sm"> */}
+      <Image src={user.avatar_url} />
+      <Title order={3}>{user.user_metadata.username}</Title>
+      <Text >{user.email}</Text>
+      {/* </Stack> */}
+      <Button my="sm" component={Link} to="/profile">Profile Settings</Button>
+
       {/* <Tooltip label="Settings" withArrow>
         <ActionIcon variant="default" onClick={() => toggleSettings()}>
           <i className='bi bi-gear'></i>

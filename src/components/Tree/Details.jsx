@@ -1,4 +1,4 @@
-import { Container, Image, Loader, Stack, Text, Title } from '@mantine/core';
+import { Container, Group, Image, Loader, Stack, Text, Title } from '@mantine/core';
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
@@ -12,6 +12,7 @@ export default function Details() {
     const { treeId } = useParams();
     const [tree, setTree] = useState();
     const [imageURL, setImageURL] = useState();
+    const [user, setUser] = useState();
 
 
     useEffect(() => {
@@ -21,7 +22,6 @@ export default function Details() {
 
     let map = null;
     useEffect(() => {
-        // if (tree && map == null) {
         if (tree?.position && imageURL && document.querySelector("#map").innerHTML == "") {
             map = L.map('map').setView(tree.position, 13);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -32,7 +32,6 @@ export default function Details() {
                 .bindPopup(`${tree.name} tree is here`)
                 .openPopup();
         }
-        // }
     }, [imageURL])
 
     async function getTree(treeId) {
@@ -42,11 +41,32 @@ export default function Details() {
             .eq('id', treeId)
             .single()
 
+        let { data: user, err } = await supabase.from("profiles")
+            .select("*")
+            .eq("id", tree.user_id)
+            .single()
 
-        console.log(tree)
+        setUser(user);
+
+
+        // console.log(tree)
         setTree(tree)
-        downloadImage(tree.display_image)
+        console.log(downloadImage(tree.display_image))
+        downloadImage(tree.display_image).then((res) => {
+            setImageURL(res)
+        })
+
+        downloadImage(user.avatar_url).then((url) => {
+            setUser({
+                avatar: url,
+                ...user
+            })
+        })
     }
+
+    useEffect(() => {
+        console.log("user", user);
+    }, [user])
 
     const downloadImage = async (path) => {
         try {
@@ -55,10 +75,12 @@ export default function Details() {
                 throw error
             }
             const url = URL.createObjectURL(data)
-            setImageURL(url)
+            return url;
+            // setImageURL(url)
 
         } catch (error) {
             console.log('Error downloading image: ', error.message)
+            return null;
         }
     }
 
@@ -73,6 +95,16 @@ export default function Details() {
                     <Text>Location: {tree.location}</Text>
                     <Text>Type: {tree.type}</Text>
                     <Text>Created on: {dayjs(tree.created_at).format("DD MMMM YYYY")}</Text>
+
+                    <Title order={3}>User</Title>
+                    <Group>
+                        <Image src={user.avatar} radius="lg" width={70} height={70} />
+                        <Stack gap={2}>
+                            <Text>User Name: {user.username}</Text>
+                            <Text>User Email: {user.email}</Text>
+                        </Stack>
+                    </Group>
+
 
                     {tree?.position &&
                         <Stack>
