@@ -130,7 +130,7 @@ export default function Layout() {
             </PrivateRoute>
           } />
           <Route path="/about" element={<About />} />
-          <Route path="/donate" element={<Donate />} />
+          {/* <Route path="/donate" element={<Donate />} /> */}
           <Route path="/*" element={<NotFound404 />} />
         </Routes>
       </AppShell>
