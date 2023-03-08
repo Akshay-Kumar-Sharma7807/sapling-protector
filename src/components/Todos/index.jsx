@@ -13,10 +13,10 @@ import Starred from "./Starred";
 import ListTodos from './ListTodos';
 import { MultiSelect } from '@mantine/core';
 import Filters from './Filters';
-import { db, auth } from '../../firebase';
-import { collection, onSnapshot, onSnapshotsInSync, orderBy, query } from 'firebase/firestore';
+// import { db, auth } from '../../firebase';
+// import { collection, onSnapshot, onSnapshotsInSync, orderBy, query } from 'firebase/firestore';
 import { useEffect } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
+// import { useAuthState } from 'react-firebase-hooks/auth';
 
 
 

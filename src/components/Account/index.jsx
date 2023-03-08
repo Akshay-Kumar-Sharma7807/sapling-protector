@@ -1,8 +1,5 @@
 import { ActionIcon, Aside, Avatar, Box, Button, Container, Drawer, Group, PasswordInput, Stack, Switch, Text, Title, Tooltip, UnstyledButton, TextInput, NavLink, Anchor, FileInput } from '@mantine/core'
 import React, { useState } from 'react'
-import { auth } from "../../firebase";
-import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider, signOut } from 'firebase/auth';
-import { useAuthState } from "react-firebase-hooks/auth";
 import { supabase } from "../../supabaseClient";
 import { useForm } from "@mantine/form";
 import { useEffect } from 'react';

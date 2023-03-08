@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Group, Checkbox, Text, UnstyledButton, ActionIcon, Paper, Title, Container, Center } from "@mantine/core";
 import EditTodo from "./EditTodo";
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from '../../firebase';
+// import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+// import { useAuthState } from 'react-firebase-hooks/auth';
+// import { auth, db } from '../../firebase';
 
 export default function ListTodos({ todos, setTodos, sortFunc, filterFunc }) {
   const [user] = useAuthState(auth)

@@ -1,9 +1,9 @@
 import { TextInput, Checkbox, Slider, Button, Group, Box, ActionIcon, Tooltip, Menu, Divider, Popover, Badge } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
-import { db, auth } from "../../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+// import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+// import { db, auth } from "../../firebase";
+// import { useAuthState } from "react-firebase-hooks/auth";
 import { Calendar, TimeInput } from '@mantine/dates';
 
 import uuid from 'react-uuid';

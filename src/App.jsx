@@ -5,9 +5,6 @@ import { MantineProvider, ColorSchemeProvider, Image } from '@mantine/core';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import ReloadPrompt from "./components/ReloadPrompt"
 import { NotificationsProvider, showNotification } from '@mantine/notifications';
-import { updateDoc, doc } from 'firebase/firestore';
-import { db, auth } from "./firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { SpotlightProvider } from "@mantine/spotlight";
 import { useDocumentVisibility } from "@mantine/hooks";
 import { AuthProvider } from "./contexts/Auth"
