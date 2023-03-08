@@ -33,6 +33,7 @@ import { useLocalStorage } from '@mantine/hooks';
 import MyTrees from "./components/Tree/MyTrees";
 import Donate from "./components/Donate/Donate";
 import Profile from "./components/Profile";
+import TreesNear from './TreesNear/TreesNear';
 
 export default function Layout() {
   const theme = useMantineTheme();
@@ -130,6 +131,8 @@ export default function Layout() {
             </PrivateRoute>
           } />
           <Route path="/about" element={<About />} />
+          <Route path="/near" element={<TreesNear />} />
+
           {/* <Route path="/donate" element={<Donate />} /> */}
           <Route path="/*" element={<NotFound404 />} />
         </Routes>

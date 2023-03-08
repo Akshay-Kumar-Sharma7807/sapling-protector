@@ -8,6 +8,7 @@ import { NotificationsProvider, showNotification } from '@mantine/notifications'
 import { SpotlightProvider } from "@mantine/spotlight";
 import { useDocumentVisibility } from "@mantine/hooks";
 import { AuthProvider } from "./contexts/Auth"
+import { AzureMapsProvider } from "react-azure-maps";
 
 
 function App() {
@@ -69,7 +70,6 @@ function App() {
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <NotificationsProvider>
 
-
           <AuthProvider>
             <Router>
               <div className={"App"}>
@@ -78,7 +78,6 @@ function App() {
               </div>
             </Router>
           </AuthProvider>
-
         </NotificationsProvider>
       </MantineProvider>
     </ColorSchemeProvider>

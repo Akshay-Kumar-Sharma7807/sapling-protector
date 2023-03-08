@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom'
 import { supabase } from '../../supabaseClient';
 // import L from 'leaflet';
 import dayjs from 'dayjs';
+import { AzureMap, AzureMapsProvider } from 'react-azure-maps';
+import { AuthenticationType } from 'azure-maps-control';
 
 
 
@@ -13,7 +15,16 @@ export default function Details() {
     const [tree, setTree] = useState();
     const [imageURL, setImageURL] = useState();
     const [user, setUser] = useState();
+    const key = import.meta.env.AZURE_MAPS_KEY;
 
+    // remove it later
+    // key = "u59CgZrGOt9-PHVeYbSONa1w_IM9s_2N1LEOV_DVcDI"
+    const option = {
+        authOptions: {
+            authType: AuthenticationType.subscriptionKey,
+            subscriptionKey: key
+        },
+    }
 
     useEffect(() => {
 
@@ -109,7 +120,16 @@ export default function Details() {
                     {tree?.position &&
                         <Stack>
                             <Title order={3} my={2}>Position</Title>
-                            <div id="map" style={{ height: 300 }}></div>
+                            <div id="map" style={{ height: 300 }}>
+
+                            </div>
+                            <AzureMapsProvider>
+                                <div style={{ height: 300 }}>
+                                    <AzureMap options={option}>
+
+                                    </AzureMap>
+                                </div>
+                            </AzureMapsProvider>
                         </Stack>
                     }
                 </Stack>
