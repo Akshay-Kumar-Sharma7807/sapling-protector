@@ -1,4 +1,9 @@
 /* App Styles */
+#myMap {
+  height: 100vh;
+  width: 100vw;
+}
+
 .App {
   display: flex;
   justify-content: center;
@@ -26,9 +31,13 @@
   --border: 0px;
   --btn-color: rgb(255, 102, 0);
 }
-.App.modern button, .App.modern li, .App.modern input {
+
+.App.modern button,
+.App.modern li,
+.App.modern input {
   border-radius: 10px;
 }
+
 /* =================== Universal Styles =============================== */
 .container {
   display: flex;
@@ -45,7 +54,7 @@
 a {
   text-decoration: none;
   color: var(--text-color);
-  
+
 }
 
 button {
@@ -53,11 +62,12 @@ button {
   box-shadow: var(--shadow) var(--shadow) black;
   color: var(--text-color);
   /* Give this color a name */
-  background: var(--btn-color); 
+  background: var(--btn-color);
   padding: 5px 10px;
   font-size: 1.4rem;
   cursor: pointer;
 }
+
 button:active {
   box-shadow: none;
 }
@@ -105,6 +115,7 @@ button:active {
 .add-button:active {
   box-shadow: none;
 }
+
 /* 
 button:focus {
   box-shadow: none;
@@ -125,6 +136,7 @@ input[type="text"] {
   /* width: 80vw; */
   /* width: clamp(5rem, 100%, 60rem); */
 }
+
 /* input[type="text"]:focus {
   box-shadow: none;
 } */
@@ -169,14 +181,17 @@ input[type="text"] {
 .list li button:active {
   box-shadow: none;
 }
+
 .list .title {
   /* flex-grow: 1; */
 }
+
 .list input[type="checkbox"] {
   accent-color: var(--accent-light);
   width: 2rem;
   height: 2rem;
 }
+
 /* sidebar */
 /* .sidebar{
   position: fixed;
