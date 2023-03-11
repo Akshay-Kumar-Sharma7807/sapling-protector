@@ -54,7 +54,6 @@ export default function Account() {
 
   const getProfile = async () => {
     try {
-      console.log(session)
       const { user } = session
 
       let { data, error, status } = await supabase

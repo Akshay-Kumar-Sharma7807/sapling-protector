@@ -1,5 +1,5 @@
 import { Container, Group, Image, Loader, Stack, Text, Title } from '@mantine/core';
-import React from 'react'
+import React, { useContext } from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { supabase } from '../../supabaseClient';
@@ -7,6 +7,7 @@ import { supabase } from '../../supabaseClient';
 import dayjs from 'dayjs';
 import { AzureMap, AzureMapsProvider } from 'react-azure-maps';
 import { AuthenticationType } from 'azure-maps-control';
+import { AzureMapsContext } from 'react-azure-maps';
 
 
 
@@ -16,13 +17,19 @@ export default function Details() {
     const [imageURL, setImageURL] = useState();
     const [user, setUser] = useState();
     const key = import.meta.env.AZURE_MAPS_KEY;
+    const { mapRef, isMapReady } = useContext(AzureMapsContext);
+
 
     // remove it later
     // key = "u59CgZrGOt9-PHVeYbSONa1w_IM9s_2N1LEOV_DVcDI"
-    const option = {
+    // console.log("position", tree.position)
+    let option = {
         authOptions: {
             authType: AuthenticationType.subscriptionKey,
-            subscriptionKey: key
+            subscriptionKey: "u59CgZrGOt9-PHVeYbSONa1w_IM9s_2N1LEOV_DVcDI",
+            center: [26.898367738159166, 75.90710451835486],
+            zoom: 19,
+            view: 'Auto',
         },
     }
 
@@ -45,6 +52,16 @@ export default function Details() {
         }
     }, [imageURL])
 
+    useEffect(() => {
+        if (tree && isMapReady && mapRef) {
+            console.log(tree.position)
+            mapRef.setCamera({
+                center: [26.898367738159166, 75.90710451835486],
+                zoom: 19
+            })
+        }
+    }, [isMapReady, tree])
+
     async function getTree(treeId) {
         let { data: tree, error } = await supabase
             .from('trees')
@@ -60,9 +77,17 @@ export default function Details() {
         setUser(user);
 
 
-        // console.log(tree)
         setTree(tree)
-        console.log(downloadImage(tree.display_image))
+        // option = {
+        //     authOptions: {
+        //         authType: AuthenticationType.subscriptionKey,
+        //         subscriptionKey: "u59CgZrGOt9-PHVeYbSONa1w_IM9s_2N1LEOV_DVcDI",
+        //         center: tree?.position,
+        //         zoom: 10,
+        //         view: 'Auto',
+        //     },
+        // }
+        // console.log(downloadImage(tree.display_image))
         downloadImage(tree.display_image).then((res) => {
             setImageURL(res)
         })
@@ -75,9 +100,9 @@ export default function Details() {
         })
     }
 
-    useEffect(() => {
-        console.log("user", user);
-    }, [user])
+    // useEffect(() => {
+    //     console.log("user", user);
+    // }, [user])
 
     const downloadImage = async (path) => {
         try {
@@ -123,13 +148,13 @@ export default function Details() {
                             <div id="map" style={{ height: 300 }}>
 
                             </div>
-                            <AzureMapsProvider>
-                                <div style={{ height: 300 }}>
-                                    <AzureMap options={option}>
+                            {/* <AzureMapsProvider> */}
+                            <div style={{ height: 300 }}>
+                                <AzureMap options={option}>
 
-                                    </AzureMap>
-                                </div>
-                            </AzureMapsProvider>
+                                </AzureMap>
+                            </div>
+                            {/* </AzureMapsProvider> */}
                         </Stack>
                     }
                 </Stack>
