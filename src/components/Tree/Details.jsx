@@ -9,14 +9,18 @@ import { AzureMap, AzureMapsProvider } from 'react-azure-maps';
 import { AuthenticationType } from 'azure-maps-control';
 import { AzureMapsContext } from 'react-azure-maps';
 
+import { data, layer, source } from 'azure-maps-control';
 
+
+const dataSourceRef = new source.DataSource();
+const layerRef = new layer.SymbolLayer(dataSourceRef);
 
 export default function Details() {
     const { treeId } = useParams();
     const [tree, setTree] = useState();
     const [imageURL, setImageURL] = useState();
     const [user, setUser] = useState();
-    const key = import.meta.env.AZURE_MAPS_KEY;
+    // const key = import.meta.env.AZURE_MAPS_KEY;
     const { mapRef, isMapReady } = useContext(AzureMapsContext);
 
 
@@ -27,14 +31,13 @@ export default function Details() {
         authOptions: {
             authType: AuthenticationType.subscriptionKey,
             subscriptionKey: "u59CgZrGOt9-PHVeYbSONa1w_IM9s_2N1LEOV_DVcDI",
-            center: [26.898367738159166, 75.90710451835486],
+            center: tree?.position.reverse(),
             zoom: 19,
             view: 'Auto',
         },
     }
 
     useEffect(() => {
-
         getTree(treeId)
     }, [])
 
@@ -56,11 +59,18 @@ export default function Details() {
         if (tree && isMapReady && mapRef) {
             console.log(tree.position)
             mapRef.setCamera({
-                center: [26.898367738159166, 75.90710451835486],
+                center: tree.position.reverse(),
                 zoom: 19
             })
+            console.log("adding point")
+            const point = new data.Position(tree.position[0], tree.position[1])
+            dataSourceRef.add(new data.Feature(new data.Point(point)));
+
+            mapRef.sources.add(dataSourceRef);
+            mapRef.layers.add(layerRef);
         }
     }, [isMapReady, tree])
+
 
     async function getTree(treeId) {
         let { data: tree, error } = await supabase
@@ -78,16 +88,6 @@ export default function Details() {
 
 
         setTree(tree)
-        // option = {
-        //     authOptions: {
-        //         authType: AuthenticationType.subscriptionKey,
-        //         subscriptionKey: "u59CgZrGOt9-PHVeYbSONa1w_IM9s_2N1LEOV_DVcDI",
-        //         center: tree?.position,
-        //         zoom: 10,
-        //         view: 'Auto',
-        //     },
-        // }
-        // console.log(downloadImage(tree.display_image))
         downloadImage(tree.display_image).then((res) => {
             setImageURL(res)
         })
@@ -99,10 +99,6 @@ export default function Details() {
             })
         })
     }
-
-    // useEffect(() => {
-    //     console.log("user", user);
-    // }, [user])
 
     const downloadImage = async (path) => {
         try {
