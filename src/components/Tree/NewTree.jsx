@@ -26,6 +26,8 @@ export default function NewTree() {
             type: "",
             age: 0,
             position: [],
+            latitude: 0,
+            longitude: 0,
         },
         validate: {
             name: (value) => value.length > 3 ? null : "Too short name",
@@ -34,7 +36,7 @@ export default function NewTree() {
         }
     })
 
-    const createTree = async ({ name, location, type, age, position }) => {
+    const createTree = async ({ name, location, type, age, position, latitude, longitude }) => {
         // setLoader(true)
         showNotification({
             id: 'create-tree',
@@ -73,6 +75,8 @@ export default function NewTree() {
                     user_id: user.id,
                     display_image: url,
                     position,
+                    latitude,
+                    longitude
                 },
             ])
         console.log(data, error)
@@ -115,6 +119,8 @@ export default function NewTree() {
             locationPicker.addMarker(longitude, latitude, "#4444ff")
             form.setValues({
                 position: [latitude, longitude],
+                longitude,
+                latitude
             })
 
 
@@ -128,6 +134,8 @@ export default function NewTree() {
             locationPicker.addMarker(lon, lat, "#4444ff")
             form.setValues({
                 position: [lat, lon],
+                latitude: lat,
+                longitude: lon
             })
         })
 
@@ -139,8 +147,8 @@ export default function NewTree() {
                 {/* <LoadingOverlay visible={loader} overlayBlur={2} /> */}
 
                 <Title order={3}>Add New Tree</Title>
-                <Group position="center">
-                    <Image src={image ? URL.createObjectURL(image) : ""} size="xl" radius="lg" />
+                <Group position="center" sx={{ maxWidth: 400, maxHeight: 400, overflow: "hidden", objectFit: "contain" }}>
+                    <Image src={image ? URL.createObjectURL(image) : ""} radius="lg" sx={{ width: "100%", height: "100%" }} />
                 </Group>
                 <FileInput label="Image of Tree" onChange={setImage} value={image} placeholder="Image of your Tree" icon={<i className='bi bi-tree' />} />
                 <TextInput
