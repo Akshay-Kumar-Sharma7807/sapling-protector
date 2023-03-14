@@ -13,11 +13,12 @@ export default function About({ type, ...others }) {
       <Title mb="md">
         Saplings Protector
       </Title>
-      <Group>
+      <Stack>
         <Anchor href="#steps">Key implementation steps</Anchor>
         <Anchor href="#scope">Scope of Solution</Anchor>
         <Anchor href="#technologies">Technologies used</Anchor>
-      </Group>
+        <Anchor href="#status">Status</Anchor>
+      </Stack>
       <Text>
         The problem I am attempting to solve with this project is the protection and monitoring of trees. Trees play a vital role in maintaining the health and sustainability of our environment, however, they are often under threat from a variety of factors such as disease, pests, and human activity.
       </Text>
@@ -95,7 +96,28 @@ export default function About({ type, ...others }) {
           Cloud computing: The data collected by the Saplings Protector system may be stored and analyzed using cloud computing technology. This allows for scalability, flexibility, and cost-effectiveness in managing large amounts of data.
         </List.Item>
         Overall, the Saplings Protector solution may involve a combination of hardware, software, and cloud-based technologies, all working together to provide effective tree monitoring and conservation.
+      </List>
 
+      <Title order={2} id="status">Current Status</Title>
+      <List>
+        <List.Item>
+          Created an app to manage and display data.
+        </List.Item>
+        <List.Item>
+          Implemented nearby trees search in app using microsoft azure maps.
+        </List.Item>
+        <List.Item>
+          User can create new trees and monitor them.
+        </List.Item>
+        <List.Item>
+          User can see all the trees that are created (means that are monitored) on this platform.
+        </List.Item>
+        <List.Item>
+          User can search for nearby trees.
+        </List.Item>
+        <List.Item>
+          App is fully functional and cross-platform.
+        </List.Item>
       </List>
       <Title my="md" order={4}>Contact Me</Title>
       <Group>
