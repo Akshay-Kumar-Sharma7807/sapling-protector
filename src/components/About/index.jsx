@@ -69,7 +69,7 @@ export default function About({ type, ...others }) {
 
       In summary, the scope of the Saplings Protector solution includes tree monitoring, real-time updates, data analysis, customizable settings, user interface, mobile access, and integration with existing systems. The solution is designed to provide comprehensive and effective protection for trees, and to support conservation efforts.
 
-      <Title order={2}>Technologies Used</Title>
+      <Title order={2} id="technologies">Technologies Used</Title>
       <List>
         <List.Item>
           Geospatial technology: The Saplings Protector system relies on geospatial technology to collect and analyze data on environmental factors that can affect the health and growth of trees. This includes GPS and GIS (geographic information system) technologies, which help to map the location of trees and to analyze spatial data.
