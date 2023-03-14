@@ -1,4 +1,4 @@
-import { Container, Title } from '@mantine/core'
+import { Container, Flex, Grid, Stack, Title } from '@mantine/core'
 // import { AuthenticationType } from 'azure-maps-control'
 import React, { useEffect, useState, useMemo, memo } from 'react'
 // import { AzureMap, AzureMapsProvider } from 'react-azure-maps'
@@ -13,6 +13,7 @@ import {
 } from 'react-azure-maps';
 import { AuthenticationType, data, MapMouseEvent, PopupOptions, ControlOptions } from 'azure-maps-control';
 import { supabase } from '../supabaseClient';
+import MapController from './MapController';
 
 const renderPoint = (coordinates) => {
     const rendId = Math.random();
@@ -72,7 +73,9 @@ function TreesNear() {
         authOptions: {
             authType: AuthenticationType.subscriptionKey,
             subscriptionKey: "u59CgZrGOt9-PHVeYbSONa1w_IM9s_2N1LEOV_DVcDI",
-            zoom: 10
+            zoom: 12,
+            center: [-100.01, 45.01],
+            view: 'Auto'
         },
     }
 
@@ -139,10 +142,13 @@ function TreesNear() {
                 .gt("longitude", position.coords.longitude - 10)
             // .rangeLte("longitude", `[${position.coords.longitude - 10}, ${position.coords.longitude + 10}]`)
 
-            console.log(trees)
+            // console.log(trees)
+            let marks = []
             trees.map((tree) => {
-                setMarkers([new data.Position(tree.longitude, tree.latitude)])
+                marks.push(new data.Position(tree.longitude, tree.latitude))
+                // setMarkers([new data.Position(tree.longitude, tree.latitude), markers])
             })
+            setMarkers(marks)
 
             setTrees(trees)
         });
@@ -154,62 +160,67 @@ function TreesNear() {
     );
 
     return (
-        <Container>
-            <Title order={3}>Trees nearby</Title>
-            <AzureMapsProvider>
-                <div style={styles.map}>
-                    <AzureMap options={option} controls={controls}>
-                        <AzureMapDataSourceProvider id={'MultiplePoint AzureMapDataSourceProvider'}>
-                            <AzureMapLayerProvider
-                                id={'MultiplePoint AzureMapLayerProvider'}
-                                options={{
-                                    iconOptions: {
-                                        image: 'pin-red',
-                                    },
-                                }}
-                                events={{
-                                    mousemove: (e) => {
-                                        if (e.shapes && e.shapes.length > 0) {
-                                            const prop = e.shapes[0];
-                                            // Set popup options
-                                            setPopupOptions({
-                                                ...popupOptions,
-                                                position: new data.Position(
-                                                    prop.data.geometry.coordinates[0],
-                                                    prop.data.geometry.coordinates[1],
-                                                ),
-                                                pixelOffset: [0, -18],
-                                            });
-                                            if (prop.data.properties)
-                                                // Set popup properties from Feature Properties that are declared on create Feature
-                                                setPopupProperties({
-                                                    ...prop.data.properties,
-                                                    dumpProp: 'My Popup',
+        <Container sx={{ height: "100%" }}>
+            <Flex direction="column" sx={{ height: "100%" }}>
+                <Title order={3}>Trees nearby</Title>
+
+                <AzureMapsProvider>
+                    <MapController />
+                    <div style={styles.map}>
+                        <AzureMap options={option} controls={controls}>
+                            <AzureMapDataSourceProvider id={'MultiplePoint AzureMapDataSourceProvider'}>
+                                <AzureMapLayerProvider
+                                    id={'MultiplePoint AzureMapLayerProvider'}
+                                    options={{
+                                        iconOptions: {
+                                            image: 'pin-red',
+                                        },
+                                    }}
+                                    events={{
+                                        mousemove: (e) => {
+                                            if (e.shapes && e.shapes.length > 0) {
+                                                const prop = e.shapes[0];
+                                                // Set popup options
+                                                setPopupOptions({
+                                                    ...popupOptions,
+                                                    position: new data.Position(
+                                                        prop.data.geometry.coordinates[0],
+                                                        prop.data.geometry.coordinates[1],
+                                                    ),
+                                                    pixelOffset: [0, -18],
                                                 });
-                                        }
-                                    },
-                                }}
-                                type="SymbolLayer"
+                                                if (prop.data.properties)
+                                                    // Set popup properties from Feature Properties that are declared on create Feature
+                                                    setPopupProperties({
+                                                        ...prop.data.properties,
+                                                        dumpProp: 'My Popup',
+                                                    });
+                                            }
+                                        },
+                                    }}
+                                    type="SymbolLayer"
+                                />
+                                {memoizedMarkerRender}
+                            </AzureMapDataSourceProvider>
+                            <AzureMapPopup
+                                isVisible={true}
+                                options={popupOptions}
+                                popupContent={
+                                    <div style={styles.popupStyles}>{JSON.stringify(popupProperties)}</div> // Inject your JSX
+                                }
                             />
-                            {memoizedMarkerRender}
-                        </AzureMapDataSourceProvider>
-                        <AzureMapPopup
-                            isVisible={true}
-                            options={popupOptions}
-                            popupContent={
-                                <div style={styles.popupStyles}>{JSON.stringify(popupProperties)}</div> // Inject your JSX
-                            }
-                        />
-                    </AzureMap>
-                </div>
-            </AzureMapsProvider>
-        </Container>
+                        </AzureMap>
+                    </div>
+                </AzureMapsProvider>
+            </Flex>
+        </Container >
     )
 }
 
 const styles = {
     map: {
-        height: 300,
+        height: "100%",
+        "flex-grow": 1,
     },
     buttonContainer: {
         display: 'grid',
