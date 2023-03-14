@@ -34,6 +34,7 @@ import MyTrees from "./components/Tree/MyTrees";
 import Donate from "./components/Donate/Donate";
 import Profile from "./components/Profile";
 import TreesNear from './TreesNear/TreesNear';
+import All from './components/Tree/All';
 
 export default function Layout() {
   const theme = useMantineTheme();
@@ -129,6 +130,9 @@ export default function Layout() {
             <PrivateRoute>
               <MyTrees />
             </PrivateRoute>
+          } />
+          <Route path="/all" element={
+            <All />
           } />
           <Route path="/about" element={<About />} />
           <Route path="/near" element={<TreesNear />} />
