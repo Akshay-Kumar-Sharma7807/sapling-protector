@@ -1,3 +1,8 @@
+html {
+  scroll-padding-top: 4rem;
+  scroll-behavior: smooth;
+}
+
 * {
   margin: 0;
   padding: 0;

@@ -13,6 +13,11 @@ export default function About({ type, ...others }) {
       <Title mb="md">
         Saplings Protector
       </Title>
+      <Group>
+        <Anchor href="#steps">Key implementation steps</Anchor>
+        <Anchor href="#scope">Scope of Solution</Anchor>
+        <Anchor href="#technologies">Technologies used</Anchor>
+      </Group>
       <Text>
         The problem I am attempting to solve with this project is the protection and monitoring of trees. Trees play a vital role in maintaining the health and sustainability of our environment, however, they are often under threat from a variety of factors such as disease, pests, and human activity.
       </Text>
@@ -32,7 +37,7 @@ export default function About({ type, ...others }) {
         This project aims to develop a system that can collect data on trees and provide insights to help protect and monitor them in an efficient way. This system will use geospatial technology to track the location and condition of trees, and help to identify potential threats to their health.
       </Text>
 
-      <Title order={2}>Key Implementation Steps</Title>
+      <Title order={2} id="steps">Key Implementation Steps</Title>
       <List type="ordered">
         <List.Item>A small number of low-cost, battery-powered sensors will be attached to a selection of trees in a park or other public area.</List.Item>
         <List.Item>The sensors will measure data such as temperature, humidity, soil moisture, and light levels, and will also use a camera to capture images of the tree and its surroundings.</List.Item>
