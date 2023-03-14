@@ -68,6 +68,30 @@ export default function About({ type, ...others }) {
       </List>
 
       In summary, the scope of the Saplings Protector solution includes tree monitoring, real-time updates, data analysis, customizable settings, user interface, mobile access, and integration with existing systems. The solution is designed to provide comprehensive and effective protection for trees, and to support conservation efforts.
+
+      <Title order={2}>Technologies Used</Title>
+      <List>
+        <List.Item>
+          Geospatial technology: The Saplings Protector system relies on geospatial technology to collect and analyze data on environmental factors that can affect the health and growth of trees. This includes GPS and GIS (geographic information system) technologies, which help to map the location of trees and to analyze spatial data.
+        </List.Item>
+        <List.Item>
+          Sensors: The system utilizes sensors to collect data on various environmental factors, such as temperature, moisture, and sunlight. The sensors can be customized to suit the specific needs of different trees and environments, and may include soil moisture sensors, temperature sensors, and light sensors.
+        </List.Item>
+        <List.Item>
+          Wireless communication: The data collected by the sensors is transmitted wirelessly to a central database for analysis. This may be done using various wireless communication technologies, such as Wi-Fi, cellular networks, or LoRaWAN (low-power wide-area network) technology.
+        </List.Item>
+        <List.Item>
+          Data analysis tools: The data collected by the sensors is analyzed using various data analysis tools, such as machine learning algorithms or statistical models. This helps to identify patterns and trends in the data, and to detect any potential issues that may require intervention.
+        </List.Item>
+        <List.Item>
+          User interface: The Saplings Protector system includes a user interface that allows users to view real-time data, historical data, and alerts. The interface may be developed using various technologies, such as web or mobile app development frameworks.
+        </List.Item>
+        <List.Item>
+          Cloud computing: The data collected by the Saplings Protector system may be stored and analyzed using cloud computing technology. This allows for scalability, flexibility, and cost-effectiveness in managing large amounts of data.
+        </List.Item>
+        Overall, the Saplings Protector solution may involve a combination of hardware, software, and cloud-based technologies, all working together to provide effective tree monitoring and conservation.
+
+      </List>
       <Title my="md" order={4}>Contact Me</Title>
       <Group>
         <Avatar src="https://i.ibb.co/m6B7PSv/IMG-20200229-101104.jpg" radius="xl" size="lg" alt="Akshay Kumar Sharma" />
