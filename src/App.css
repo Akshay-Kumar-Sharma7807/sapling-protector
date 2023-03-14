@@ -4,6 +4,12 @@
   width: 100vw;
 }
 
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 8.5rem;
+}
+
 .App {
   display: flex;
   justify-content: center;

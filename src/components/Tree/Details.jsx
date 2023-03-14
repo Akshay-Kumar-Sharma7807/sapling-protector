@@ -57,9 +57,9 @@ export default function Details() {
 
     useEffect(() => {
         if (tree && isMapReady && mapRef) {
-            console.log(tree.position)
+            console.log(tree?.position)
             mapRef.setCamera({
-                center: tree.position.reverse(),
+                center: tree?.position?.reverse(),
                 zoom: 19
             })
             console.log("adding point")

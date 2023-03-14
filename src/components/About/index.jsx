@@ -10,7 +10,7 @@ export default function About({ type, ...others }) {
   return (
     <Stack gap="sm" p="sm">
 
-      <Title order={2} mb="md">
+      <Title mb="md">
         Saplings Protector
       </Title>
       <Text>
@@ -32,7 +32,7 @@ export default function About({ type, ...others }) {
         This project aims to develop a system that can collect data on trees and provide insights to help protect and monitor them in an efficient way. This system will use geospatial technology to track the location and condition of trees, and help to identify potential threats to their health.
       </Text>
 
-      <Title order={3}>Key Implementation Steps</Title>
+      <Title order={2}>Key Implementation Steps</Title>
       <List type="ordered">
         <List.Item>A small number of low-cost, battery-powered sensors will be attached to a selection of trees in a park or other public area.</List.Item>
         <List.Item>The sensors will measure data such as temperature, humidity, soil moisture, and light levels, and will also use a camera to capture images of the tree and its surroundings.</List.Item>
@@ -41,7 +41,34 @@ export default function About({ type, ...others }) {
         <List.Item>Users will be able to access the web interface to view data on individual trees and on the overall health of the tree population.</List.Item>
         <List.Item>Additionally, A mobile application will be developed to allow users to report any suspicious activities around the tree via the app and it will be geo-tagged to the tree's location.</List.Item>
       </List>
-      <Title my="md" order={5}>Contact Me</Title>
+
+      <Title order={2} id="scope">Scope of the Solution:</Title>
+      <List>
+        <List.Item>
+          Tree monitoring: The Saplings Protector system is designed to monitor the health and growth of trees by collecting data on various environmental factors, such as temperature, moisture, and sunlight. The system uses a combination of sensors and geospatial technology to collect this data, which is then transmitted wirelessly to a central database for analysis.
+        </List.Item>
+        <List.Item>
+          Real-time updates: The system provides real-time updates on the health and growth of the trees, allowing users to quickly identify any potential issues and take appropriate action. This can include notifying conservationists or park rangers of any changes in the environment, or triggering automated responses to address specific issues.
+        </List.Item>
+        <List.Item>
+          Data analysis: The data collected by the Saplings Protector system is analyzed to determine the overall health of each tree, and to identify any potential issues that may require intervention. The analysis includes both real-time data and historical data, which allows for long-term trends and patterns to be identified.
+        </List.Item>
+        <List.Item>
+          Customizable settings: The system can be customized to suit the specific needs of different trees and environments. This includes adjusting the sensitivity of sensors to match the conditions of the environment, or setting up alerts to trigger specific responses in the event of certain conditions.
+        </List.Item>
+        <List.Item>
+          User interface: The Saplings Protector system includes a user interface that allows users to view real-time data, historical data, and alerts. The interface is designed to be user-friendly and easy to navigate, allowing users to quickly identify any potential issues and take appropriate action.
+        </List.Item>
+        <List.Item>
+          Mobile access: The system can be accessed remotely through mobile devices, allowing users to monitor the health and growth of trees from anywhere at any time.
+        </List.Item>
+        <List.Item>
+          Integration with existing systems: The Saplings Protector system can be integrated with existing conservation efforts, such as park management systems or conservation databases. This allows for a more comprehensive approach to tree monitoring and conservation.
+        </List.Item>
+      </List>
+
+      In summary, the scope of the Saplings Protector solution includes tree monitoring, real-time updates, data analysis, customizable settings, user interface, mobile access, and integration with existing systems. The solution is designed to provide comprehensive and effective protection for trees, and to support conservation efforts.
+      <Title my="md" order={4}>Contact Me</Title>
       <Group>
         <Avatar src="https://i.ibb.co/m6B7PSv/IMG-20200229-101104.jpg" radius="xl" size="lg" alt="Akshay Kumar Sharma" />
         <Title order={4}>Akshay Kumar Sharma</Title>
