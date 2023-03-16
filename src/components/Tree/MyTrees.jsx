@@ -14,7 +14,6 @@ export default function MyTrees() {
     });
 
     const getTrees = async () => {
-        console.log(user)
         let { data, error } = await supabase
             .from('trees')
             .select('*')

@@ -15,6 +15,38 @@ import { data, layer, source } from 'azure-maps-control';
 const dataSourceRef = new source.DataSource();
 const layerRef = new layer.SymbolLayer(dataSourceRef);
 
+const controls = [
+    {
+        controlName: 'StyleControl',
+        controlOptions: { mapStyles: 'all' },
+        options: { position: 'top-right' },
+    },
+    {
+        controlName: 'ZoomControl',
+        options: { position: 'top-right' },
+    },
+    {
+        controlName: 'CompassControl',
+        controlOptions: { rotationDegreesDelta: 10, style: 'dark' },
+        options: { position: 'bottom-right' },
+    },
+    {
+        controlName: 'PitchControl',
+        controlOptions: { pitchDegreesDelta: 5, style: 'dark' },
+        options: { position: 'bottom-right' },
+    },
+    {
+        controlName: 'TrafficControl',
+        controlOptions: { incidents: true },
+        options: { position: 'top-left' },
+    },
+    {
+        controlName: 'TrafficLegendControl',
+        controlOptions: {},
+        options: { position: 'bottom-left' },
+    },
+];
+
 export default function Details() {
     const { treeId } = useParams();
     const [tree, setTree] = useState();
@@ -31,8 +63,8 @@ export default function Details() {
         authOptions: {
             authType: AuthenticationType.subscriptionKey,
             subscriptionKey: "u59CgZrGOt9-PHVeYbSONa1w_IM9s_2N1LEOV_DVcDI",
-            center: tree?.position.reverse(),
-            zoom: 19,
+            center: tree?.position?.reverse(),
+            zoom: 1,
             view: 'Auto',
         },
     }
@@ -57,17 +89,16 @@ export default function Details() {
 
     useEffect(() => {
         if (tree && isMapReady && mapRef) {
-            console.log(tree?.position)
             mapRef.setCamera({
                 center: tree?.position?.reverse(),
                 zoom: 19
             })
-            console.log("adding point")
-            const point = new data.Position(tree.position[0], tree.position[1])
+            const point = new data.Position(tree?.position[0], tree?.position[1])
             dataSourceRef.add(new data.Feature(new data.Point(point)));
 
             mapRef.sources.add(dataSourceRef);
             mapRef.layers.add(layerRef);
+            console.log(user)
         }
     }, [isMapReady, tree])
 
@@ -146,7 +177,7 @@ export default function Details() {
                             </div>
                             {/* <AzureMapsProvider> */}
                             <div style={{ height: 300 }}>
-                                <AzureMap options={option}>
+                                <AzureMap options={option} controls={controls}>
 
                                 </AzureMap>
                             </div>

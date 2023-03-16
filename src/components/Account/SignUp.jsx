@@ -20,7 +20,7 @@ export default function SignUp({ setCreateAccount }) {
     })
 
     const signUpEmail = async ({ username, email, password }) => {
-        console.log("sign up", email)
+        // console.log("sign up", email)
         const fileExt = avatar.name.split('.').pop()
         const url = `${Math.random() * 1000}.${fileExt}`
 
