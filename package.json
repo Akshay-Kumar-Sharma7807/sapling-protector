@@ -24,6 +24,7 @@
     "react": "^18.2.0",
     "react-azure-maps": "^0.4.4",
     "react-dom": "^18.2.0",
+    "react-onesignal": "^2.0.4",
     "react-router-dom": "^6.4.5",
     "react-uuid": "^2.0.0"
   },
@@ -31,6 +32,7 @@
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^2.2.0",
+    "supabase": "^1.45.2",
     "vite": "^3.2.1",
     "vite-plugin-pwa": "^0.13.1"
   }

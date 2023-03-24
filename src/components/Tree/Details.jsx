@@ -12,6 +12,8 @@ import { AzureMapsContext } from 'react-azure-maps';
 import { data, layer, source } from 'azure-maps-control';
 
 
+const azureSubscriptionKey = import.meta.env.VITE_AZURE_MAPS_KEY;
+
 const dataSourceRef = new source.DataSource();
 const layerRef = new layer.SymbolLayer(dataSourceRef);
 
@@ -55,14 +57,10 @@ export default function Details() {
     // const key = import.meta.env.AZURE_MAPS_KEY;
     const { mapRef, isMapReady } = useContext(AzureMapsContext);
 
-
-    // remove it later
-    // key = "u59CgZrGOt9-PHVeYbSONa1w_IM9s_2N1LEOV_DVcDI"
-    // console.log("position", tree.position)
     let option = {
         authOptions: {
             authType: AuthenticationType.subscriptionKey,
-            subscriptionKey: "u59CgZrGOt9-PHVeYbSONa1w_IM9s_2N1LEOV_DVcDI",
+            subscriptionKey: azureSubscriptionKey,
             center: tree?.position?.reverse(),
             zoom: 1,
             view: 'Auto',

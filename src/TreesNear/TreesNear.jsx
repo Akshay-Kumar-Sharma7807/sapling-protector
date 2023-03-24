@@ -15,6 +15,8 @@ import { AuthenticationType, data, MapMouseEvent, PopupOptions, ControlOptions }
 import { supabase } from '../supabaseClient';
 import MapController from './MapController';
 
+const azureSubscriptionKey = import.meta.env.VITE_AZURE_MAPS_KEY;
+
 const renderPoint = (coordinates) => {
     const rendId = Math.random();
     return (
@@ -72,7 +74,7 @@ function TreesNear() {
     const option = {
         authOptions: {
             authType: AuthenticationType.subscriptionKey,
-            subscriptionKey: "u59CgZrGOt9-PHVeYbSONa1w_IM9s_2N1LEOV_DVcDI",
+            subscriptionKey: azureSubscriptionKey,
             zoom: 12,
             center: [-100.01, 45.01],
             view: 'Auto'

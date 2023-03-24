@@ -35,10 +35,13 @@ import Donate from "./components/Donate/Donate";
 import Profile from "./components/Profile";
 import TreesNear from './TreesNear/TreesNear';
 import All from './components/Tree/All';
+import OneSignal from 'react-onesignal'
+
+const oneSignalAppId = import.meta.env.VITE_PUBLIC_ONESIGNAL_APP_ID
 
 export default function Layout() {
   const theme = useMantineTheme();
-
+  const [oneSignalInitialized, setOneSignalInitialized] = useState(false)
   const [trees, setTrees] = useLocalStorage({
     key: 'trees',
     defaultValue: [],
@@ -53,9 +56,29 @@ export default function Layout() {
     setOpened(false)
   }, [location])
 
+
+  const initializeOneSignal = async (uid) => {
+    if (oneSignalInitialized) {
+      return
+    }
+    setOneSignalInitialized(true)
+    await OneSignal.init({
+      appId: oneSignalAppId,
+      notifyButton: {
+        enable: true,
+      },
+
+      allowLocalhostAsSecureOrigin: true,
+    })
+
+    await OneSignal.setExternalUserId(uid)
+  }
+
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session)
+      await initializeOneSignal(session.user.id)
+      console.log(session)
     })
 
     supabase.auth.onAuthStateChange((_event, session) => {
