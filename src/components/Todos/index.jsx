@@ -17,42 +17,58 @@ import Filters from './Filters';
 // import { collection, onSnapshot, onSnapshotsInSync, orderBy, query } from 'firebase/firestore';
 import { useEffect } from 'react';
 // import { useAuthState } from 'react-firebase-hooks/auth';
-
+import { useAuth } from '../../contexts/Auth';
+import { supabase } from '../../supabaseClient';
 
 
 
 export default function Todos() {
-  const [user, loading] = useAuthState(auth);
+  const { user } = useAuth();
   const [todos, setTodos] = useLocalStorage({
     key: 'todos',
     defaultValue: [],
   });
+  let loading = true;
   // const [todos, setTodos] = useState([]);
   const [todoModal, setTodoModal] = useState(false);
   const [dialog, setDialog] = useState(false);
 
   // if (user) {
   useEffect(() => {
-    let unsubscribe;
-    if (user && !loading) {
-      unsubscribe = onSnapshot(query(collection(db, "Users", user?.uid, "Tasks"), orderBy("created")), (snapshot) => {
-        console.log("snapshot: ", snapshot);
-        const tasks = [];
-        snapshot.forEach((task) => {
-          tasks.push(task.data());
-        });
-        console.log(tasks);
-        setTodos(tasks)
-      })
+    let unsubscribe = () => {
+      return;
+    };
+    if (user) {
+
+      supabase.channel('custom-all-channel')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'tasks' },
+          (payload) => {
+            console.log('Change received!', payload)
+            setTodos(payload.new)
+          }
+        )
+        .subscribe()
+
+      supabase.from("tasks").select("*")
+        .eq("user_id", user.id).then((res) => {
+          console.log(res)
+          setTodos(res.data)
+        })
+      // setTodos(tasks)
+      // unsubscribe = onSnapshot(query(collection(db, "Users", user?.uid, "Tasks"), orderBy("created")), (snapshot) => {
+      //   console.log("snapshot: ", snapshot);
+      //   const tasks = [];
+      //   snapshot.forEach((task) => {
+      //     tasks.push(task.data());
+      //   });
+      //   console.log(tasks);
+      //   setTodos(tasks)
+      // })
 
     }
 
-
-    return () => {
-      if (user) {
-        unsubscribe();
-      }
-    }
   }, [loading])
   // }
 

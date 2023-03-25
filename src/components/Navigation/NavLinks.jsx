@@ -48,6 +48,7 @@ const data = [
   {
     icon: <i className="bi bi-tree" />, color: 'green', label: 'My Trees', link: "/my-trees"
   },
+  { icon: <i className="bi bi-check" />, color: 'cyan', label: 'Tasks', link: "/tasks" },
   { icon: <i className="bi bi-geo-alt" />, color: 'yellow', label: 'Trees Near Me', link: "/near" },
   // { icon: <i className="bi bi-calendar3" />, color: 'violet', label: 'Tasks', link: "/tasks" },
   { icon: <i className="bi bi-infinity" />, color: 'orange', label: 'All', link: "/all" },

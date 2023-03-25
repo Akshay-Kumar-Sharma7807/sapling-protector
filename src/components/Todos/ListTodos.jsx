@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Group, Checkbox, Text, UnstyledButton, ActionIcon, Paper, Title, Container, Center } from "@mantine/core";
 import EditTodo from "./EditTodo";
+import { useAuth } from '../../contexts/Auth';
+import { supabase } from '../../supabaseClient';
 // import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 // import { useAuthState } from 'react-firebase-hooks/auth';
 // import { auth, db } from '../../firebase';
 
 export default function ListTodos({ todos, setTodos, sortFunc, filterFunc }) {
-  const [user] = useAuthState(auth)
+  const { user } = useAuth()
   // console.log(sortFunc, "and", filterFunc)
   sortFunc = sortFunc ?? function (a, b) { return b.importance - a.importance }
   filterFunc = filterFunc ?? function () { return true }
@@ -27,7 +29,12 @@ export default function ListTodos({ todos, setTodos, sortFunc, filterFunc }) {
       return list.filter((t) => t.id != id)
     })
     if (user) {
-      deleteDoc(doc(db, "Users", user.uid, "Tasks", id))
+
+      supabase
+        .from('tasks')
+        .delete()
+        .eq('id', id)
+
     }
   }
 
@@ -41,9 +48,13 @@ export default function ListTodos({ todos, setTodos, sortFunc, filterFunc }) {
       return t
     }))
     if (user) {
-      updateDoc(doc(db, "Users", user.uid, "Tasks", id), {
-        favourite: fav
-      })
+      // updateDoc(doc(db, "Users", user.uid, "Tasks", id), {
+      //   favourite: fav
+      // })
+      supabase
+        .from('tasks')
+        .update({ favourite: fav })
+        .eq('id', id)
     }
   }
 
@@ -56,9 +67,13 @@ export default function ListTodos({ todos, setTodos, sortFunc, filterFunc }) {
     }))
 
     if (user) {
-      updateDoc(doc(db, "Users", user.uid, "Tasks", id), {
-        completed: e.target.checked
-      })
+      // updateDoc(doc(db, "Users", user.uid, "Tasks", id), {
+      //   completed: e.target.checked
+      // })
+      supabase
+        .from('tasks')
+        .update({ completed: e.target.checked })
+        .eq('id', id)
     }
   }
 

@@ -154,6 +154,11 @@ export default function Layout() {
               <MyTrees />
             </PrivateRoute>
           } />
+          <Route path="/tasks/*" element={
+            <PrivateRoute>
+              <Todos />
+            </PrivateRoute>
+          } />
           <Route path="/all" element={
             <All />
           } />

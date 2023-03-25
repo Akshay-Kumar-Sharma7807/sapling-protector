@@ -5,11 +5,13 @@ import { useState } from 'react';
 // import { db, auth } from "../../firebase";
 // import { useAuthState } from "react-firebase-hooks/auth";
 import { Calendar, TimeInput } from '@mantine/dates';
+import { supabase } from '../../supabaseClient';
 
 import uuid from 'react-uuid';
 import { useEffect } from 'react';
 import { getLaterToday, getNextWeek, getTomorrow } from '../../utils';
 import { useLocation } from "react-router-dom";
+import { useAuth } from '../../contexts/Auth';
 
 export default function AddTodo({ close, setTodos }) {
   const location = useLocation();
@@ -25,18 +27,17 @@ export default function AddTodo({ close, setTodos }) {
     console.log(dueDate);
   }, [dueDate])
   const [dueMenu, setDueMenu] = useState(false);
-  const [user] = useAuthState(auth)
+  const { user } = useAuth()
   // console.log(location.pathname === "/tasks/my-day" ? true : false)
   const form = useForm({
     initialValues: {
-      id: uuid(),
+      user_id: user.id,
       task: '',
       completed: false,
-      importance: 25,
+      // importance: 25,
       favourite: false,
-      myDay: location.pathname === "/tasks/my-day" ? true : false,
+      // myDay: location.pathname === "/tasks/my-day" ? true : false,
       categories: [],
-      created: serverTimestamp(),
       notified: false,
       dueDate: dueDate,
     }
@@ -51,14 +52,19 @@ export default function AddTodo({ close, setTodos }) {
     { value: 100, label: 'Must Do' },
   ];
 
-  const addNewTask = (values) => {
+  const addNewTask = async (values) => {
     values.dueDate = dueDate;
-    values.reminder = reminder;
-    console.log(values.myDay);
+    // values.reminder = reminder;
+    // console.log(values.myDay);
+    console.log(values)
     if (user) {
+      const { data, error } = await supabase
+        .from('tasks')
+        .insert([
+          values,
+        ])
 
-
-      setDoc(doc(db, "Users", user.uid, "Tasks", values.id), values)
+      // setDoc(doc(db, "Users", user.uid, "Tasks", values.id), values)
     }
     else {
       console.log("user not signed in");
@@ -77,14 +83,14 @@ export default function AddTodo({ close, setTodos }) {
           {...form.getInputProps('task')}
         />
 
-        <Slider
+        {/* <Slider
           mt="md"
           label={(val) => MARKS.find((mark) => mark.value === val).label}
           marks={MARKS}
           step={25}
           styles={{ markLabel: { display: 'none' } }}
           {...form.getInputProps('importance')}
-        />
+        /> */}
 
         <Group mt="md">
           <Menu
@@ -212,7 +218,7 @@ export default function AddTodo({ close, setTodos }) {
           </Menu>
 
         </Group>
-        <Checkbox label="Add to My Day" mt="sm" {...form.getInputProps('myDay', { type: 'checkbox' })} />
+        {/* <Checkbox label="Add to My Day" mt="sm" {...form.getInputProps('myDay', { type: 'checkbox' })} /> */}
         <Group position="right" mt="md">
           <Button type="submit">Add</Button>
         </Group>

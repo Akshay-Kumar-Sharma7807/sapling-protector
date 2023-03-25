@@ -2,12 +2,13 @@ import React from 'react'
 import { Drawer, Title, Group, Slider, Textarea, Switch, Paper, TextInput, ActionIcon, ThemeIcon, Checkbox, MultiSelect, Footer, Text, Button } from "@mantine/core";
 import { Calendar } from '@mantine/dates';
 import { useLocalStorage } from '@mantine/hooks';
+import { useAuth } from '../../contexts/Auth';
 // import { updateDoc, doc } from 'firebase/firestore';
 // import { useAuthState } from 'react-firebase-hooks/auth';
 // import { auth, db } from '../../firebase';
 
 export default function EditTodo({ editMenu, setEditMenu, todos, id, starTodo, completeTodo, deleteTodo, addToMyDay, setTitle, setNote, setImportance, updateCategories }) {
-  const [user] = useAuthState(auth);
+  const { user } = useAuth();
   const todo = todos[todos.findIndex(t => t.id === id)];
   const MARKS = [
     { value: 0, label: 'Not Important' },
