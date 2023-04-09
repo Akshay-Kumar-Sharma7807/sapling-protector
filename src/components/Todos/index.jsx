@@ -28,6 +28,10 @@ export default function Todos() {
     key: 'todos',
     defaultValue: [],
   });
+  const [trees, setTrees] = useLocalStorage({
+    key: "trees",
+    defaultValue: []
+  });
   let loading = true;
   // const [todos, setTodos] = useState([]);
   const [todoModal, setTodoModal] = useState(false);
@@ -46,7 +50,7 @@ export default function Todos() {
           { event: '*', schema: 'public', table: 'tasks' },
           (payload) => {
             console.log('Change received!', payload)
-            setTodos(payload.new)
+            // setTodos(payload.new)
           }
         )
         .subscribe()
@@ -109,7 +113,7 @@ export default function Todos() {
         <Route path="/my-day" element={<ListTodos todos={todos} setTodos={setTodos} filterFunc={(a) => a.myDay} />} />
         <Route path="/important" element={<Important todos={todos} setTodos={setTodos} />} />
         <Route path="/planned" element={<Planned todos={todos} setTodos={setTodos} />} />
-        <Route path="/all" element={<All todos={todos} setTodos={setTodos} />} />
+        <Route path="/" element={<All todos={todos} setTodos={setTodos} />} />
         <Route path="/completed" element={<Completed todos={todos} setTodos={setTodos} />} />
         <Route path="/assigned-to-me" element={<AssignedToMe todos={todos} setTodos={setTodos} />} />
         <Route path="/inbox" element={<Tasks todos={todos} setTodos={setTodos} />} />

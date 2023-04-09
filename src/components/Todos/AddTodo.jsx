@@ -1,4 +1,4 @@
-import { TextInput, Checkbox, Slider, Button, Group, Box, ActionIcon, Tooltip, Menu, Divider, Popover, Badge } from '@mantine/core';
+import { TextInput, Checkbox, Slider, Button, Group, Box, ActionIcon, Tooltip, Menu, Divider, Popover, Badge, Select, Avatar, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 // import { doc, serverTimestamp, setDoc } from "firebase/firestore";
@@ -6,19 +6,47 @@ import { useState } from 'react';
 // import { useAuthState } from "react-firebase-hooks/auth";
 import { Calendar, TimeInput } from '@mantine/dates';
 import { supabase } from '../../supabaseClient';
-
+import { forwardRef } from 'react';
 import uuid from 'react-uuid';
 import { useEffect } from 'react';
 import { getLaterToday, getNextWeek, getTomorrow } from '../../utils';
 import { useLocation } from "react-router-dom";
 import { useAuth } from '../../contexts/Auth';
+import { useLocalStorage } from '@mantine/hooks';
+// import { SelectItems } from '@mantine/core/lib/Select/SelectItems/SelectItems';
+
+
+const SelectItem = forwardRef(
+  ({ image, label, description, ...others }, ref) => (
+    <div ref={ref} {...others}>
+      <Group noWrap>
+        <Avatar src={image} />
+
+        <div>
+          <Text size="sm">{label}</Text>
+          <Text size="xs" opacity={0.65}>
+            {description}
+          </Text>
+        </div>
+      </Group>
+    </div>
+  )
+);
+
+
 
 export default function AddTodo({ close, setTodos }) {
   const location = useLocation();
+  const [selectedTree, setSelectedTree] = useState("");
   const [dueDate, setDueDate] = useState(null);
   const [reminder, setReminder] = useState({
     date: null,
     string: ""
+  });
+
+  const [trees, setTrees] = useLocalStorage({
+    key: "trees",
+    defaultValue: []
   });
   const rtf = new Intl.RelativeTimeFormat('en', { style: 'narrow', numeric: 'auto' });
   const dtf = new Intl.DateTimeFormat('en-US', { timeStyle: "short", dateStyle: "short" });
@@ -40,6 +68,7 @@ export default function AddTodo({ close, setTodos }) {
       categories: [],
       notified: false,
       dueDate: dueDate,
+      tree_id: "",
     }
   });
 
@@ -57,6 +86,7 @@ export default function AddTodo({ close, setTodos }) {
     // values.reminder = reminder;
     // console.log(values.myDay);
     console.log(values)
+    values.tree_id = selectedTree;
     if (user) {
       const { data, error } = await supabase
         .from('tasks')
@@ -217,6 +247,30 @@ export default function AddTodo({ close, setTodos }) {
 
           </Menu>
 
+        </Group>
+        <Group>
+          <Select
+            label="Choose employee of the month"
+            placeholder="Pick one"
+            itemComponent={SelectItem}
+            onChange={setSelectedTree}
+            data={
+              trees.map((tree) => {
+                return {
+                  image: tree.url,
+                  label: tree.name,
+                  value: tree.id
+                }
+              })
+            }
+            searchable
+            maxDropdownHeight={400}
+            nothingFound="Nobody here"
+            filter={(value, item) =>
+              item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
+              item?.description?.toLowerCase().includes(value.toLowerCase().trim())
+            }
+          />
         </Group>
         {/* <Checkbox label="Add to My Day" mt="sm" {...form.getInputProps('myDay', { type: 'checkbox' })} /> */}
         <Group position="right" mt="md">

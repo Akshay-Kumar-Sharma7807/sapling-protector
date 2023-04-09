@@ -1,11 +1,18 @@
 import React from 'react'
-import { Drawer, Title, Group, Slider, Textarea, Switch, Paper, TextInput, ActionIcon, ThemeIcon, Checkbox, MultiSelect, Footer, Text, Button } from "@mantine/core";
+import { Drawer, Title, Group, Slider, Textarea, Switch, Paper, TextInput, ActionIcon, ThemeIcon, Checkbox, MultiSelect, Footer, Text, Button, Loader } from "@mantine/core";
 import { Calendar } from '@mantine/dates';
 import { useLocalStorage } from '@mantine/hooks';
 import { useAuth } from '../../contexts/Auth';
+import { useEffect, useState } from 'react';
+import { supabase } from '../../supabaseClient';
+import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 // import { updateDoc, doc } from 'firebase/firestore';
 // import { useAuthState } from 'react-firebase-hooks/auth';
 // import { auth, db } from '../../firebase';
+
+dayjs.extend(relativeTime)
 
 export default function EditTodo({ editMenu, setEditMenu, todos, id, starTodo, completeTodo, deleteTodo, addToMyDay, setTitle, setNote, setImportance, updateCategories }) {
   const { user } = useAuth();
@@ -26,6 +33,19 @@ export default function EditTodo({ editMenu, setEditMenu, todos, id, starTodo, c
       { value: "essentials", label: "Essentials" },
     ],
   })
+  // console.log(todo)
+  const [tree, setTree] = useState()
+
+  useEffect(() => {
+    // console.log(todo.tree_id)
+    supabase.from("trees")
+      .select("*")
+      .eq("id", todo?.tree_id)
+      .single()
+      .then((res) => {
+        setTree(res.data)
+      })
+  }, [])
 
 
   if (todos && todo) return (
@@ -145,6 +165,13 @@ export default function EditTodo({ editMenu, setEditMenu, todos, id, starTodo, c
         {/* <Paper></Paper> */}
       </Paper>
       {/* <Footer> */}
+      <Paper shadow="sm" radius="md" mb="xs" p="sm" withBorder>
+        <Group>
+          <Button component={Link} to={`/tree/${tree?.id}`} loading={tree == null} variant="light" mx="auto">
+            <Title order={3}>{tree?.name}</Title>
+          </Button>
+        </Group>
+      </Paper>
       <Group p="sm" position="apart" mt="auto" sx={{ margin: "auto" }}>
         <ActionIcon
           color="red"
@@ -154,7 +181,7 @@ export default function EditTodo({ editMenu, setEditMenu, todos, id, starTodo, c
           <i className={`bi bi-trash`} size={16} />
           {todo.favourite}
         </ActionIcon>
-        <Text variant='secondary'>Created Today</Text>
+        <Text variant='secondary'>Created {dayjs(todo.created_at).fromNow()}</Text>
       </Group>
       {/* </Footer> */}
     </Drawer >
