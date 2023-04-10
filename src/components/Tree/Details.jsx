@@ -149,8 +149,8 @@ export default function Details() {
         <Container>
             {tree ?
                 <Stack>
-                    <Title>{tree.name}</Title>
-                    <Image alt={tree.name} src={imageURL} />
+                    <Title align='center'>{tree.name}</Title>
+                    <Image alt={tree.name} src={imageURL} maw={240} mx="auto" radius="sm" />
 
                     <Title order={3}>Details</Title>
                     <Text>Location: {tree.location}</Text>

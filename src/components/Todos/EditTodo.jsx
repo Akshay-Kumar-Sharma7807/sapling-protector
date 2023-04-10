@@ -55,8 +55,10 @@ export default function EditTodo({ editMenu, setEditMenu, todos, id, starTodo, c
       onClose={() => {
         setEditMenu((o) => !o)
         if (user) {
-          updateDoc(doc(db, "Users", user.uid, "Tasks", todo.id), todo)
-
+          // updateDoc(doc(db, "Users", user.uid, "Tasks", todo.id), todo)
+          supabase.from("tasks")
+            .update(todo)
+            .eq('id', todo.id)
         }
       }}
       title={<Title order={4}>{todo.task}</Title>}
