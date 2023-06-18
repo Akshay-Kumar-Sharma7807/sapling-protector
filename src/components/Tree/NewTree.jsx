@@ -173,7 +173,7 @@ export default function NewTree() {
                 <TextInput
                     // mt="md"
                     withAsterisk
-                    label="Type"
+                    label="Species"
                     placeholder="Neem, Ashoka, etc."
                     {...form.getInputProps('type')}
                 />

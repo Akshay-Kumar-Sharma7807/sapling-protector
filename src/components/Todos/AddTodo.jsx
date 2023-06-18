@@ -250,7 +250,7 @@ export default function AddTodo({ close, setTodos }) {
         </Group>
         <Group>
           <Select
-            label="Choose employee of the month"
+            label="Choose assigned Tree"
             placeholder="Pick one"
             itemComponent={SelectItem}
             onChange={setSelectedTree}
