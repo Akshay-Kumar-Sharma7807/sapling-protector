@@ -37,6 +37,7 @@ import TreesNear from './TreesNear/TreesNear';
 import All from './components/Tree/All';
 import OneSignal from 'react-onesignal'
 import Learn from './components/Learn/Learn';
+import Identify from './components/Identify/Identify';
 
 const oneSignalAppId = import.meta.env.VITE_PUBLIC_ONESIGNAL_APP_ID
 
@@ -165,6 +166,9 @@ export default function Layout() {
           } />
           <Route path="/learn" element={
             <Learn />
+          } />
+          <Route path="/identify" element={
+            <Identify />
           } />
           <Route path="/about" element={<About />} />
           <Route path="/near" element={<TreesNear />} />

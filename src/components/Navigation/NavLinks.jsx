@@ -53,6 +53,7 @@ const data = [
   // { icon: <i className="bi bi-calendar3" />, color: 'violet', label: 'Tasks', link: "/tasks" },
   { icon: <i className="bi bi-infinity" />, color: 'orange', label: 'All', link: "/all" },
   { icon: <i className="bi bi-book" />, color: 'purple', label: 'Learn', link: "/learn" },
+  { icon: <i className="bi bi-camera" />, color: 'grape', label: 'Identify', link: "/identify" },
   { icon: <i className="bi bi-info-circle" />, color: 'teal', label: 'About', link: "/about" },
   // { icon: <i className="bi bi-check-circle" />, color: 'teal', label: 'Implementation steps', link: "/implementation_steps" },
   // { icon: <i className="bi bi-person" />, color: 'grape', label: 'Assigned to me', link: "/tasks/assigned-to-me" },
