@@ -9,8 +9,9 @@ export default function Identify() {
             organs: "auto"
         }
     })
+    // console.log(image)
     let identify = (values) => {
-        fetch("https://my-api.plantnet.org/v2/identify/all" + "?api-key=2b10G793uJs1Eceq9ckepgyL5O",
+        fetch("https://my-api.plantnet.org/v2/identify/all?include-related-images=false&no-reject=false&lang=en&api-key=2b10G793uJs1Eceq9ckepgyL5O",
             {
                 method: "POST",
                 data: {
