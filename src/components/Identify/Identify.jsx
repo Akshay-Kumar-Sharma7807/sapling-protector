@@ -17,7 +17,7 @@ export default function Identify() {
         let formData = new FormData();
         formData.append("organs", values.organs)
         formData.append("images", image)
-        fetch("https://my-api.plantnet.org/v2/identify/all?include-related-images=false&no-reject=false&lang=en&api-key=2b10G793uJs1Eceq9ckepgyL5O",
+        fetch("https://my-api.plantnet.org/v2/identify/all?include-related-images=true&no-reject=false&lang=en&api-key=2b10G793uJs1Eceq9ckepgyL5O",
             {
                 method: "POST",
                 body: formData
