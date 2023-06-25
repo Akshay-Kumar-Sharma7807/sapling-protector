@@ -1,10 +1,12 @@
-import { ActionIcon, Button, Container, FileInput, Group, Select, Stack, Title } from '@mantine/core'
+import { ActionIcon, Alert, Button, Container, FileInput, Group, Image, LoadingOverlay, Select, Stack, Text, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import React, { useState } from 'react'
-import Info from './Info';
+import Results from './Results';
 
 export default function Identify() {
+    let [visible, setVisible] = useState();
     let [data, setData] = useState();
+    let [error, setError] = useState();
     const [image, setImage] = useState();
     const form = useForm({
         initialValues: {
@@ -14,6 +16,7 @@ export default function Identify() {
     // data.append("images", [image])
     // console.log(image)
     let identify = (values) => {
+        setVisible(true);
         let formData = new FormData();
         formData.append("organs", values.organs)
         formData.append("images", image)
@@ -25,10 +28,21 @@ export default function Identify() {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data)
-                setData(data)
+                if (data.statusCode && data.statusCode !== 200) {
+                    setError({
+                        head: data.error,
+                        message: data.message
+                    })
+                }
+                else {
+                    setData(data)
+                }
+                setVisible(false)
             })
             .catch((err) => {
                 console.log("error: ", err);
+                setVisible(false)
+
             })
     }
     return (
@@ -38,14 +52,26 @@ export default function Identify() {
                 <i className='bi bi-camera'></i>
             </ActionIcon> */}
             <form onSubmit={form.onSubmit((values) => identify(values))}>
-                <Stack align="center">
-                    <FileInput label="Select Image" placeholder="Select Image" icon={<i className="bi bi-camera" />} onChange={setImage} value={image} />
-                    <Select {...form.getInputProps("organs")} data={["auto", "leaf", "branch", "flower", "fruit", "bark"]}></Select>
+                <LoadingOverlay visible={visible} overlayBlur={2} />
+
+                <Stack my="md" maw={500}>
+                    {image &&
+                        <Image src={URL.createObjectURL(image)} maw={300} />
+                    }
+                    <FileInput label="Select Image" placeholder="Select Image" icon={<i className="bi bi-camera" />} onChange={setImage} value={image} required accept="image/png,image/jpeg" />
+                    <Select {...form.getInputProps("organs")} label="Select Organs" data={["auto", "leaf", "branch", "flower", "fruit", "bark"]}></Select>
                     <Button type="submit">Submit</Button>
                 </Stack>
             </form>
             {data &&
-                <Info data={data} />
+                <Results data={data} />
+            }
+            {error &&
+                <>
+                    <Alert icon={<i className="bi bi-info-circle" />} title={error.head} color="red">
+                        {error.message}
+                    </Alert>
+                </>
             }
         </Container>
     )
