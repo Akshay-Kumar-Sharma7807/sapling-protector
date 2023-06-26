@@ -59,7 +59,7 @@ export default function Identify() {
                         <Image src={URL.createObjectURL(image)} maw={300} />
                     }
                     <FileInput label="Select Image" placeholder="Select Image" icon={<i className="bi bi-camera" />} onChange={setImage} value={image} required accept="image/png,image/jpeg" />
-                    <Select {...form.getInputProps("organs")} label="Select Organs" data={["auto", "leaf", "branch", "flower", "fruit", "bark"]}></Select>
+                    <Select {...form.getInputProps("organs")} label="Select Organ" data={["auto", "leaf", "branch", "flower", "fruit", "bark"]}></Select>
                     <Button type="submit">Submit</Button>
                 </Stack>
             </form>
