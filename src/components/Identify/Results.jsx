@@ -1,4 +1,4 @@
-import { Center, Container, Grid, Group, Image, List, Modal, Paper, Stack, Text, Title } from '@mantine/core'
+import { Center, Container, Grid, Group, Image, List, Modal, Paper, Stack, Text, Title, UnstyledButton } from '@mantine/core'
 import React, { useState } from 'react'
 import leaf from "./leaf.svg";
 import { useDisclosure } from '@mantine/hooks';
@@ -42,31 +42,33 @@ export default function Results({ data }) {
                 </Modal>
             }
             <Title order={2}>Results</Title>
-            {data?.results.map((result) => {
-                return <Paper my="sm" p="sm" onClick={(e) => openModel(result)}>
-                    <Grid grow align="center">
-                        <Grid.Col span={6}>
-                            <Stack>
-                                <Title order={3} color="green">{result.species.scientificName}</Title>
-                                <Title order={4}>{result.species.commonNames[0]}</Title>
-                            </Stack>
-                        </Grid.Col>
-                        <Grid.Col span={6}>
-                            <Group position="right" >
-                                <Image maw={60} src={leaf} opacity={result.score < 0.2 ? 0.2 : result.score} />
-                                <Text>{(result.score * 100).toFixed(2)}%</Text>
-                            </Group>
-                        </Grid.Col>
-                        <Grid.Col span={12}>
-                            <Group>
-                                {result.images.map((image) => {
-                                    return <Image maw={100} src={image.url.m} />
-                                })}
-                            </Group>
-                        </Grid.Col>
-                    </Grid>
-                </Paper>
-            })}
+            <Stack my="md" gap="md">
+                {data?.results.map((result) => {
+                    return <Paper shadow="md" p="sm" withBorder onClick={(e) => openModel(result)}>
+                        <Grid grow align="center">
+                            <Grid.Col span={6}>
+                                <Stack>
+                                    <Title order={3} color="green">{result.species.scientificName}</Title>
+                                    <Title order={4}>{result.species.commonNames[0]}</Title>
+                                </Stack>
+                            </Grid.Col>
+                            <Grid.Col span={6}>
+                                <Group position="right" >
+                                    <Image maw={60} src={leaf} opacity={result.score < 0.2 ? 0.2 : result.score} />
+                                    <Text>{(result.score * 100).toFixed(2)}%</Text>
+                                </Group>
+                            </Grid.Col>
+                            <Grid.Col span={12}>
+                                <Group>
+                                    {result.images.map((image) => {
+                                        return <Image maw={100} src={image.url.m} radius="md" />
+                                    })}
+                                </Group>
+                            </Grid.Col>
+                        </Grid>
+                    </Paper>
+                })}
+            </Stack>
         </>
     )
 }
