@@ -1,38 +1,33 @@
-import React from 'react'
 import {
-  UnstyledButton,
-  Group,
-  ThemeIcon,
-  Text,
+  NavLink,
+  ThemeIcon
 } from '@mantine/core'
+import React from 'react'
 
 export default function NavBtn({ icon, color, label, onClick, ...others }) {
   return (
-    <UnstyledButton
-      {...others}
-      onClick={onClick}
+    <NavLink
+      onClick={() => onClick()}
+      label={label}
+      leftSection={<ThemeIcon color={color} variant="light">{icon}</ThemeIcon>}
       sx={(theme) => ({
-        display: 'block',
+        // display: 'block',
         width: '100%',
         padding: theme.spacing.xs,
         borderRadius: theme.radius.sm,
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        // color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         textDecoration: 'none',
-        transition: "border 0.2s ease-in-out",
+        transition: "font-weight 0.1s linear",
 
-        '&:hover': {
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        // '&:hover': {
+        //   backgroundColor:
+        //     theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        // },
+        '&.active': {
+          fontWeight: "bold",
         }
       })}
     >
-      <Group>
-        <ThemeIcon color={color} variant="light">
-          {icon}
-        </ThemeIcon>
-
-        <Text size="sm">{label}</Text>
-      </Group>
-    </UnstyledButton>
+    </NavLink>
   )
 }

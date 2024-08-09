@@ -1,8 +1,8 @@
 import React from 'react'
 import './ReloadPrompt.css'
 
-import { useRegisterSW } from 'virtual:pwa-register/react'
 import { Alert, Box, Button, Group } from '@mantine/core'
+import { useRegisterSW } from 'virtual:pwa-register/react'
 
 function ReloadPrompt() {
     const {

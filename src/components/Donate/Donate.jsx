@@ -1,5 +1,5 @@
-import { Container, Image, Text, Title } from '@mantine/core'
-import React from 'react'
+import { Container, Image, Text, Title } from '@mantine/core';
+import React from 'react';
 import qr from "../../assets/bmc_qr.png";
 
 export default function Donate() {

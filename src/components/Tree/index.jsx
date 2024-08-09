@@ -1,10 +1,10 @@
 import { Container } from '@mantine/core'
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { PrivateRoute } from '../../PrivateRoute'
-import NewTree from './NewTree'
-import Details from "./Details";
 import { AzureMapsProvider } from 'react-azure-maps'
+import { Route, Routes } from 'react-router-dom'
+import { PrivateRoute } from '../../PrivateRoute'
+import Details from "./Details"
+import NewTree from './NewTree'
 
 export default function Tree() {
     return (

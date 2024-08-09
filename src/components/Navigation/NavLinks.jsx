@@ -1,9 +1,7 @@
 import React from 'react';
 // import { GitPullRequest, AlertCircle, Messages, Database } from 'tabler-icons-react';
-import { ThemeIcon, UnstyledButton, Group, Text, Box, Divider, Stack } from '@mantine/core';
-import { NavLink as RouterLink } from "react-router-dom";
-import { NavLink } from '@mantine/core';
-import { useLocation } from 'react-router-dom';
+import { Divider, NavLink, Stack, ThemeIcon } from '@mantine/core';
+import { NavLink as RouterLink, useLocation } from "react-router-dom";
 
 export function MainLink({ icon, color, label, link }) {
   const location = useLocation();
@@ -12,7 +10,7 @@ export function MainLink({ icon, color, label, link }) {
       component={RouterLink}
       to={link}
       label={label}
-      icon={<ThemeIcon color={color} variant="light">{icon}</ThemeIcon>}
+      leftSection={<ThemeIcon color={color} variant="light">{icon}</ThemeIcon>}
       active={location.pathname == link}
       sx={(theme) => ({
         // display: 'block',
@@ -65,7 +63,7 @@ const data = [
 export function NavLinks() {
   const links = data.map((link) => <MainLink {...link} key={link.label} />);
   return (
-    <Stack spacing={2}>
+    <Stack gap={4}>
       {links}
       <Divider my={4} />
     </Stack>

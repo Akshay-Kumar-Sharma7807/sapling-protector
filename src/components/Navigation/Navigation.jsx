@@ -1,9 +1,8 @@
-import { Navbar, ScrollArea, Divider, useMantineColorScheme, MediaQuery } from "@mantine/core";
-import { NavLinks } from "./NavLinks";
+import { AppShell, Box, Divider, ScrollArea, useMantineColorScheme } from "@mantine/core";
 import NavBtn from "./NavBtn";
+import { NavLinks } from "./NavLinks";
 
-import React from 'react'
-import About from "../About";
+import React from 'react';
 
 export default function Navigation({ opened }) {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -11,9 +10,9 @@ export default function Navigation({ opened }) {
 
   const share = (e) => {
     let shareData = {
-      title: "AKS TODO",
-      text: "Manage Tasks from anywhere",
-      url: "https://aks-todo.web.app"
+      title: "Sapro",
+      text: "Save Trees and build a greener world",
+      url: "https://saplings-protector.netlify.app"
     }
     try {
       if (navigator.canShare(shareData)) {
@@ -26,21 +25,20 @@ export default function Navigation({ opened }) {
   }
 
   return (
-    <Navbar p="xs" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 300, lg: 300, base: "100%" }}>
+    
       <ScrollArea>
-        <Navbar.Section grow>
+        <AppShell.Section grow>
           <NavLinks />
           <NavBtn icon={<i className="bi bi-share"></i>} color="cyan" label="Share" onClick={share} />
           <Divider my={4} />
-          <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+          <Box styles={{ display: 'none' }}>
             <span>
               <NavBtn icon={<i className={colorScheme === "dark" ? "bi bi-sun" : "bi bi-moon-stars"}></i>} color="yellow" label={colorScheme === "dark" ? "Light Mode" : "Dark Mode"} onClick={() => toggleColorScheme()} />
               {/* <About type="nav-btn" /> */}
             </span>
-          </MediaQuery>
-        </Navbar.Section>
+          </Box>
+        </AppShell.Section>
 
       </ScrollArea>
-    </Navbar >
   )
 }

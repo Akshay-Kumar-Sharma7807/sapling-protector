@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "name": "YouTube iFrame Player",
+    "description": "Replaces YouTube player with a privacy-enhanced iFrame version.",
+    "version": "1.0.0",
+    "permissions": ["activeTab", "storage"],
+    "content_scripts": [
+      {
+        "matches": ["https://www.youtube.com/watch?*"],
+        "js": ["content.js"]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": ["iframe_player.css"],
+        "matches": ["https://www.youtube.com/watch?*"]
+      }
+    ]
+  }

@@ -1,19 +1,39 @@
-import { useState, useEffect } from 'react';
+import { MantineProvider, createTheme } from '@mantine/core';
+import '@mantine/core/styles.css';
+import {
+  MantineEmotionProvider,
+  emotionTransform
+} from '@mantine/emotion';
+import { Notifications } from '@mantine/notifications';
 import { BrowserRouter as Router } from "react-router-dom";
-import Layout from "./Layout"
-import { MantineProvider, ColorSchemeProvider, Image } from '@mantine/core';
-import { useHotkeys, useLocalStorage } from '@mantine/hooks';
-import ReloadPrompt from "./components/ReloadPrompt"
-import { NotificationsProvider, showNotification } from '@mantine/notifications';
-import { SpotlightProvider } from "@mantine/spotlight";
-import { useDocumentVisibility } from "@mantine/hooks";
-import { AuthProvider } from "./contexts/Auth"
-import { AzureMapsProvider } from "react-azure-maps";
+import Layout from './Layout';
+import ReloadPrompt from "./components/ReloadPrompt";
+import { AuthProvider } from "./contexts/Auth";
 
+const myColor = [
+  '#e5feee',
+  '#d2f9e0',
+  '#a8f1c0',
+  '#7aea9f',
+  '#53e383',
+  '#3bdf70',
+  '#2bdd66',
+  '#1ac455',
+  '#0caf49',
+  '#00963c'
+];
+
+const theme = createTheme({
+  primaryColor: 'green',
+  colors: {
+    myColor,
+  }
+});
 
 function App() {
+  
   // const [user] = useAuthState(auth);
-  const documentState = useDocumentVisibility();
+  // const documentState = useDocumentVisibility();
   // let myWorker = null;
   // if (window.Worker) {
   //   myWorker = new Worker('/worker.js');
@@ -55,21 +75,11 @@ function App() {
 
 
 
-  const [colorScheme, setColorScheme] = useLocalStorage({
-    key: 'mantine-color-scheme',
-    defaultValue: 'light',
-  });
-
-  const toggleColorScheme = (value) =>
-    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
-
-  useHotkeys([['mod+J', () => toggleColorScheme()]]);
 
   return (
-    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-        <NotificationsProvider>
-
+      <MantineProvider stylesTransform={emotionTransform} theme={theme}>
+        <MantineEmotionProvider>
+        <Notifications />
           <AuthProvider>
             <Router>
               <div className={"App"}>
@@ -78,9 +88,8 @@ function App() {
               </div>
             </Router>
           </AuthProvider>
-        </NotificationsProvider>
+          </MantineEmotionProvider>
       </MantineProvider>
-    </ColorSchemeProvider>
   )
 }
 

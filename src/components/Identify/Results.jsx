@@ -1,7 +1,7 @@
-import { Center, Container, Grid, Group, Image, List, Modal, Paper, Stack, Text, Title, UnstyledButton } from '@mantine/core'
-import React, { useState } from 'react'
-import leaf from "./leaf.svg";
+import { Grid, Group, Image, List, Modal, Paper, Stack, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import React, { useState } from 'react';
+import leaf from "./leaf.svg";
 
 export default function Results({ data }) {
     const [opened, { open, close }] = useDisclosure(false);

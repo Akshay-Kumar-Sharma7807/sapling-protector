@@ -1,11 +1,11 @@
-import { AspectRatio, Avatar, Button, FileInput, Group, Image, LoadingOverlay, NumberInput, Stack, TextInput, Title } from '@mantine/core'
+import { Button, FileInput, Group, Image, NumberInput, Stack, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { showNotification, updateNotification } from '@mantine/notifications';
-import React, { useEffect, useState } from 'react'
+import { LocationPicker } from "niwa-location-picker";
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
-import { LocationPicker } from "niwa-location-picker";
 import "./style.css";
 
 export default function NewTree() {

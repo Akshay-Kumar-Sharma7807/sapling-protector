@@ -1,9 +1,9 @@
-import { Anchor, Container, Group, Image, Paper, Stack, Text, Title, UnstyledButton } from '@mantine/core'
+import { Anchor, Container, Group, Image, Paper, Stack, Text, Title, UnstyledButton } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
-import React, { useEffect } from 'react'
-import { supabase } from '../../supabaseClient';
-import nature from "../../assets/undraw_nature_m5ll.svg";
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import nature from "../../assets/undraw_nature_m5ll.svg";
+import { supabase } from '../../supabaseClient';
 
 export default function All() {
     const [trees, setTrees] = useLocalStorage({

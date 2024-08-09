@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { Group, Checkbox, Text, UnstyledButton, ActionIcon, Paper, Title, Container, Center } from "@mantine/core";
-import EditTodo from "./EditTodo";
+import { ActionIcon, Center, Checkbox, Group, Paper, Title, UnstyledButton } from "@mantine/core";
+import React, { useState } from 'react';
 import { useAuth } from '../../contexts/Auth';
 import { supabase } from '../../supabaseClient';
+import EditTodo from "./EditTodo";
 // import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 // import { useAuthState } from 'react-firebase-hooks/auth';
 // import { auth, db } from '../../firebase';

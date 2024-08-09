@@ -1,10 +1,8 @@
-import { ActionIcon, Aside, Avatar, Box, Button, Container, Drawer, Group, PasswordInput, Stack, Switch, Text, Title, Tooltip, UnstyledButton, TextInput, NavLink, Anchor, FileInput } from '@mantine/core'
-import React, { useState } from 'react'
-import { supabase } from "../../supabaseClient";
+import { Anchor, Avatar, Button, Drawer, Group, PasswordInput, Stack, TextInput, Title, Tooltip, UnstyledButton } from '@mantine/core';
 import { useForm } from "@mantine/form";
-import { useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { showNotification } from '@mantine/notifications';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { supabase } from "../../supabaseClient";
 import SignUp from './SignUp';
 
 export default function Account() {

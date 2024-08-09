@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { supabase } from '../../supabaseClient'
-import { showNotification } from '@mantine/notifications'
 import { Anchor, Avatar, Button, FileInput, Group, PasswordInput, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { showNotification } from '@mantine/notifications'
+import React, { useState } from 'react'
+import { supabase } from '../../supabaseClient'
+import { DropzoneButton } from './DropzoneButton'
 
 
 export default function SignUp({ setCreateAccount }) {
@@ -16,6 +17,7 @@ export default function SignUp({ setCreateAccount }) {
         validate: {
             email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
             username: (value) => value.length > 3 ? null : "Too short name",
+            password: (value) => value.length >= 6 ? null : "Password is too short"
         }
     })
 
@@ -58,6 +60,8 @@ export default function SignUp({ setCreateAccount }) {
     return (
         <form onSubmit={signUpForm.onSubmit((values) => signUpEmail(values))}>
             <Title order={3}>Create Account</Title>
+            {/* Add a dropzone for the user to selects their pfp */}
+            {/* <DropzoneButton></DropzoneButton> */}
             <Group position="center">
                 <Avatar src={avatar ? URL.createObjectURL(avatar) : ""} size="xl" radius="lg" />
 

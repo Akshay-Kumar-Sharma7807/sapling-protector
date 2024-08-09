@@ -1,18 +1,16 @@
-import { TextInput, Checkbox, Slider, Button, Group, Box, ActionIcon, Tooltip, Menu, Divider, Popover, Badge, Select, Avatar, Text } from '@mantine/core';
+import { ActionIcon, Avatar, Badge, Box, Button, Divider, Group, Menu, Popover, Select, Text, TextInput, Tooltip } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 // import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 // import { db, auth } from "../../firebase";
 // import { useAuthState } from "react-firebase-hooks/auth";
 import { Calendar, TimeInput } from '@mantine/dates';
-import { supabase } from '../../supabaseClient';
-import { forwardRef } from 'react';
-import uuid from 'react-uuid';
-import { useEffect } from 'react';
-import { getLaterToday, getNextWeek, getTomorrow } from '../../utils';
+import { useLocalStorage } from '@mantine/hooks';
+import { forwardRef, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import { useAuth } from '../../contexts/Auth';
-import { useLocalStorage } from '@mantine/hooks';
+import { supabase } from '../../supabaseClient';
+import { getLaterToday, getNextWeek, getTomorrow } from '../../utils';
 // import { SelectItems } from '@mantine/core/lib/Select/SelectItems/SelectItems';
 
 

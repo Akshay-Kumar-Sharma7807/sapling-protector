@@ -1,7 +1,7 @@
-import { ActionIcon, Alert, Aside, Button, Container, Divider, Drawer, Group, Image, Stack, Switch, Text, Title, Tooltip } from '@mantine/core'
-import React, { useState } from 'react'
-import { useAuth } from "../../contexts/Auth";
+import { Alert, Button, Container, Image, Stack, Switch, Text, Title } from '@mantine/core';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from "../../contexts/Auth";
 
 export default function Settings() {
   const [open, setOpen] = useState();

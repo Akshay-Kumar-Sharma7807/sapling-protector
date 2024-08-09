@@ -1,9 +1,9 @@
-import { Avatar, Button, Checkbox, Container, FileInput, Group, TextInput, Title } from '@mantine/core'
+import { Avatar, Button, Container, FileInput, Group, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import React, { useEffect, useState } from 'react'
-import { useAuth } from '../../contexts/Auth'
-import { supabase } from '../../supabaseClient';
 import { hideNotification, showNotification } from '@mantine/notifications';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../contexts/Auth';
+import { supabase } from '../../supabaseClient';
 
 export default function Profile() {
     const { user } = useAuth();

@@ -1,18 +1,17 @@
-import { Container, Button, Table, Modal, Group, Checkbox, Text, Dialog, Divider, ActionIcon, Switch } from '@mantine/core'
-import React, { useState } from 'react'
-import AddTodo from "./AddTodo"
+import { Button, Container, Group, Modal, Title } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
-import { Routes, Route } from 'react-router-dom';
-import Important from './Important';
-import Planned from "./Planned";
+import React, { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import AddTodo from "./AddTodo";
 import All from "./All";
-import Completed from "./Completed";
 import AssignedToMe from "./AssignedToMe";
-import Tasks from "./Tasks";
-import Starred from "./Starred";
-import ListTodos from './ListTodos';
-import { MultiSelect } from '@mantine/core';
+import Completed from "./Completed";
 import Filters from './Filters';
+import Important from './Important';
+import ListTodos from './ListTodos';
+import Planned from "./Planned";
+import Starred from "./Starred";
+import Tasks from "./Tasks";
 // import { db, auth } from '../../firebase';
 // import { collection, onSnapshot, onSnapshotsInSync, orderBy, query } from 'firebase/firestore';
 import { useEffect } from 'react';
@@ -85,15 +84,17 @@ export default function Todos() {
         onClose={() => setTodoModal(false)}
         title="Add New Task"
         size="lg"
+        color="green"
       >
         <AddTodo close={() => setTodoModal(false)} setTodos={setTodos} />
       </Modal>
 
+      <Title order={2} mb="sm">Tasks</Title>
       <Group position="apart">
-        <Button leftIcon={<i className="bi bi-plus" style={{ fontSize: "1.2rem" }}></i>} onClick={() => setTodoModal((t) => !t)}>
+        <Button color="green" leftIcon={<i className="bi bi-plus" style={{ fontSize: "1.2rem" }}></i>} onClick={() => setTodoModal((t) => !t)}>
           Add New Task
         </Button>
-        <Button variant='outline' onClick={() => setDialog(true)}>
+        <Button color="green" variant='outline' onClick={() => setDialog(true)}>
           Sort & Filter
         </Button>
         <Modal

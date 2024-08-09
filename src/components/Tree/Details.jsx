@@ -1,15 +1,13 @@
 import { Container, Group, Image, Loader, Stack, Text, Title } from '@mantine/core';
-import React, { useContext } from 'react'
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 // import L from 'leaflet';
+import { layer, source } from 'azure-maps-control';
 import dayjs from 'dayjs';
-import { AzureMap, AzureMapsProvider } from 'react-azure-maps';
-import { AuthenticationType } from 'azure-maps-control';
-import { AzureMapsContext } from 'react-azure-maps';
-
-import { data, layer, source } from 'azure-maps-control';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
 
 const azureSubscriptionKey = import.meta.env.VITE_AZURE_MAPS_KEY;
@@ -55,22 +53,23 @@ export default function Details() {
     const [imageURL, setImageURL] = useState();
     const [user, setUser] = useState();
     // const key = import.meta.env.AZURE_MAPS_KEY;
-    const { mapRef, isMapReady } = useContext(AzureMapsContext);
+    // const { mapRef, isMapReady } = useContext(AzureMapsContext);
 
-    let option = {
-        authOptions: {
-            authType: AuthenticationType.subscriptionKey,
-            subscriptionKey: azureSubscriptionKey,
-            center: tree?.position?.reverse(),
-            zoom: 1,
-            view: 'Auto',
-        },
-    }
+    // let option = {
+    //     authOptions: {
+    //         authType: AuthenticationType.subscriptionKey,
+    //         subscriptionKey: azureSubscriptionKey,
+    //         center: tree?.position?.reverse(),
+    //         zoom: 1,
+    //         view: 'Auto',
+    //     },
+    // }
 
     useEffect(() => {
         getTree(treeId)
     }, [])
 
+    // code for the old leaflet map
     let map = null;
     useEffect(() => {
         if (tree?.position && imageURL && document.querySelector("#map").innerHTML == "") {
@@ -85,20 +84,20 @@ export default function Details() {
         }
     }, [imageURL])
 
-    useEffect(() => {
-        if (tree && isMapReady && mapRef) {
-            mapRef.setCamera({
-                center: tree?.position?.reverse(),
-                zoom: 19
-            })
-            const point = new data.Position(tree?.position[0], tree?.position[1])
-            dataSourceRef.add(new data.Feature(new data.Point(point)));
+    // useEffect(() => {
+    //     if (tree && isMapReady && mapRef) {
+    //         mapRef.setCamera({
+    //             center: tree?.position?.reverse(),
+    //             zoom: 19
+    //         })
+    //         const point = new data.Position(tree?.position[0], tree?.position[1])
+    //         dataSourceRef.add(new data.Feature(new data.Point(point)));
 
-            mapRef.sources.add(dataSourceRef);
-            mapRef.layers.add(layerRef);
-            console.log(user)
-        }
-    }, [isMapReady, tree])
+    //         mapRef.sources.add(dataSourceRef);
+    //         mapRef.layers.add(layerRef);
+    //         console.log(user)
+    //     }
+    // }, [isMapReady, tree])
 
 
     async function getTree(treeId) {
@@ -170,16 +169,21 @@ export default function Details() {
                     {tree?.position &&
                         <Stack>
                             <Title order={3} my={2}>Position</Title>
+
+                            <MapContainer center={tree.position} zoom={13} scrollWheelZoom={false} style={{height: 300}}>
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                <Marker position={tree.position}>
+                                    <Popup>
+                                    {tree.name} <br /> {tree.location}
+                                    </Popup>
+                                </Marker>
+                            </MapContainer>
                             <div id="map" style={{ height: 300 }}>
 
                             </div>
-                            {/* <AzureMapsProvider> */}
-                            <div style={{ height: 300 }}>
-                                <AzureMap options={option} controls={controls}>
-
-                                </AzureMap>
-                            </div>
-                            {/* </AzureMapsProvider> */}
                         </Stack>
                     }
                 </Stack>

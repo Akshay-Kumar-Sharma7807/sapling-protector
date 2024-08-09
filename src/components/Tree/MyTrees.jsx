@@ -1,10 +1,11 @@
-import { Anchor, Container, Group, Image, Paper, Stack, Text, Title, UnstyledButton } from '@mantine/core'
+import { Anchor, Button, Container, Group, Image, Paper, Stack, Text, Title, UnstyledButton } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import nature from "../../assets/undraw_nature_m5ll.svg";
 import { useAuth } from '../../contexts/Auth';
 import { supabase } from '../../supabaseClient';
-import nature from "../../assets/undraw_nature_m5ll.svg";
-import { Link } from 'react-router-dom';
+
 
 export default function MyTrees() {
     const { user } = useAuth();
@@ -58,6 +59,7 @@ export default function MyTrees() {
     return (
         <Container>
             <Title order={2}>My Trees</Title>
+            <Button my="sm" component={Link} to="/tree/new" leftSection={<i className="bi bi-plus" />} color="teal">New Tree</Button>
             <Stack align="center">
                 {trees.length === 0 &&
                     <>

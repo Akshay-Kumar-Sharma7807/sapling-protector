@@ -1,13 +1,11 @@
-import React from 'react'
-import { Drawer, Title, Group, Slider, Textarea, Switch, Paper, TextInput, ActionIcon, ThemeIcon, Checkbox, MultiSelect, Footer, Text, Button, Loader } from "@mantine/core";
-import { Calendar } from '@mantine/dates';
+import { ActionIcon, Button, Checkbox, Drawer, Group, MultiSelect, Paper, Slider, Switch, Text, TextInput, Textarea, Title } from "@mantine/core";
 import { useLocalStorage } from '@mantine/hooks';
-import { useAuth } from '../../contexts/Auth';
-import { useEffect, useState } from 'react';
-import { supabase } from '../../supabaseClient';
-import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/Auth';
+import { supabase } from '../../supabaseClient';
 // import { updateDoc, doc } from 'firebase/firestore';
 // import { useAuthState } from 'react-firebase-hooks/auth';
 // import { auth, db } from '../../firebase';

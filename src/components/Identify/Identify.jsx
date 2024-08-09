@@ -1,6 +1,6 @@
-import { ActionIcon, Alert, Button, Container, FileInput, Group, Image, LoadingOverlay, Select, Stack, Text, Title } from '@mantine/core'
-import { useForm } from '@mantine/form'
-import React, { useState } from 'react'
+import { Alert, Button, Container, FileInput, Image, LoadingOverlay, Select, Stack, Title } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import React, { useState } from 'react';
 import Results from './Results';
 
 export default function Identify() {
