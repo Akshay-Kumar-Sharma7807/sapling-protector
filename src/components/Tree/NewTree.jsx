@@ -103,7 +103,7 @@ export default function NewTree() {
     useEffect(() => {
         document.querySelector("#map").innerHTML = "";
         const locationPicker = new LocationPicker('#map', {
-            height: 350
+            height: 400
         });
 
 
