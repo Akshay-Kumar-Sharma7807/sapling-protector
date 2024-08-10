@@ -94,9 +94,7 @@ export default function NewTree() {
                 throw uploadError
             }
         }
-        let identifiedtype = identify(image).results[0];
-        form.setFieldValue("type", identifiedtype.species.common_names[0])
-
+        
 
         const { data, error } = await supabase
             .from('trees')
@@ -176,7 +174,8 @@ export default function NewTree() {
     }, [])
 
     useEffect(() => {
-        console.log(identify(image))
+        let identifiedtype = identify(image)?.results[0];
+        form.setFieldValue("type", identifiedtype?.species.common_names[0])
     }, [image])
 
     return (
