@@ -4,7 +4,6 @@ import classes from './home.module.css';
 
 export default function Home() {
   return (
-    <div className={classes.hero}>
       <Container className={classes.container} size="md">
         <Title className={classes.title}>Empower Nature with Smart Tree Monitoring</Title>
         <Text className={classes.description} size="xl" mt="xl">
@@ -21,6 +20,5 @@ export default function Home() {
         
         </Group>
       </Container>
-    </div>
   );
 }
