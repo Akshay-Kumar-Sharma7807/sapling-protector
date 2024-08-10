@@ -10,6 +10,7 @@ import { Burger } from '@mantine/core';
 import { useDisclosure, useLocalStorage } from '@mantine/hooks';
 import OneSignal from 'react-onesignal';
 import { useLocation } from 'react-router-dom';
+import { useSwipeable } from "react-swipeable";
 import NotFound404 from './NotFound404';
 import { PrivateRoute } from './PrivateRoute';
 import TreesNear from "./TreesNear/TreesNear";
@@ -29,6 +30,7 @@ import All from './components/Tree/All';
 import MyTrees from './components/Tree/MyTrees';
 import { supabase } from './supabaseClient';
 
+
 const oneSignalAppId = import.meta.env.VITE_PUBLIC_ONESIGNAL_APP_ID
 
 export default function Layout() {
@@ -45,6 +47,10 @@ export default function Layout() {
   const [session, setSession] = useState(null)
   const location = useLocation();
   const navigate = useNavigate();
+  const handlers = useSwipeable({
+    trackMouse: true,
+    onSwipedRight: () => toggleMobile()
+  });
 
   useEffect(() => {
     setOpened(false)
@@ -105,6 +111,7 @@ export default function Layout() {
         //   <Head setOpened={setOpened} opened={opened} />
         // }
       >
+        <div {...handlers} className='swipe' />
         <AppShell.Header>
           <Group h="100%" px="md" align='center' sx={{ alignContent: 'center' }} justify='center'>
             <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
@@ -113,7 +120,7 @@ export default function Layout() {
           </Group>
         </AppShell.Header>
         <AppShell.Navbar p="md">
-        <Navigation></Navigation>
+        <Navigation toggleMobile={toggleMobile}></Navigation>
       </AppShell.Navbar>
 
         <AppShell.Main>

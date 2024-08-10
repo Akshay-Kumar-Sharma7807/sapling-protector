@@ -4,6 +4,15 @@
   width: 100vw;
 }
 
+.swipe {
+
+  float: left;
+  position: fixed;
+  width: 33%;
+  height: 100%;
+  border: 2px dashed gray;
+}
+
 
 html {
   scroll-behavior: smooth;

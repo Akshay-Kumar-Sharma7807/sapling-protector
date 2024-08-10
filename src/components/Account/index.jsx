@@ -1,5 +1,6 @@
-import { Anchor, Avatar, Button, Drawer, Group, PasswordInput, Stack, TextInput, Title, Tooltip, UnstyledButton } from '@mantine/core';
+import { Anchor, Avatar, Button, Drawer, Group, LoadingOverlay, PasswordInput, Stack, TextInput, Title, Tooltip, UnstyledButton } from '@mantine/core';
 import { useForm } from "@mantine/form";
+import { notifications } from '@mantine/notifications';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from "../../supabaseClient";
@@ -10,6 +11,7 @@ export default function Account() {
   const [createAccount, setCreateAccount] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -87,14 +89,23 @@ export default function Account() {
 
 
   const signInEmail = async ({ email, password }) => {
+    setVisible(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
-    // console.log(data, error)
+    if (error) {
+      notifications.show({
+        title: "Error Signing In",
+        message: error.message,
+        color: "red",
+        position: 'bottom-right',
+      })
+    }
     if (location.pathname == '/login') {
       navigate("/home")
     }
+    setVisible(false);
   }
 
 
@@ -128,6 +139,7 @@ export default function Account() {
           }
         }}
       >
+        <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
         {
           session ?
             <Stack align="center">
@@ -138,7 +150,7 @@ export default function Account() {
             :
             <Stack>
               {createAccount ?
-                <SignUp setCreateAccount={setCreateAccount} />
+                <SignUp setCreateAccount={setCreateAccount} setVisible={setVisible} />
                 :
                 <form onSubmit={form.onSubmit((values) => signInEmail(values))}>
                   <Title order={3}>Login</Title>

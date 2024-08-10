@@ -1,13 +1,16 @@
 import React from 'react';
 // import { GitPullRequest, AlertCircle, Messages, Database } from 'tabler-icons-react';
 import { Divider, NavLink, Stack, ThemeIcon } from '@mantine/core';
-import { NavLink as RouterLink, useLocation } from "react-router-dom";
+import { NavLink as RouterLink, useLocation, useNavigate } from "react-router-dom";
 
-export function MainLink({ icon, color, label, link }) {
+export function MainLink({ icon, color, label, link, toggleMobile }) {
   const location = useLocation();
+  const navigate = useNavigate();
+
   return (
     <NavLink
       component={RouterLink}
+      onClick={() => toggleMobile()}
       to={link}
       label={label}
       leftSection={<ThemeIcon color={color} variant="light">{icon}</ThemeIcon>}
@@ -60,8 +63,8 @@ const data = [
   { icon: <i className="bi bi-gear" />, color: 'gray', label: 'Settings', link: "/settings" },
 ];
 
-export function NavLinks() {
-  const links = data.map((link) => <MainLink {...link} key={link.label} />);
+export function NavLinks({toggleMobile}) {
+  const links = data.map((link) => <MainLink {...link} key={link.label} toggleMobile={toggleMobile} />);
   return (
     <Stack gap={4}>
       {links}

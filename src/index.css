@@ -24,3 +24,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.swipe {
+ 
+  float: left;
+  position: fixed;
+  width: 33%;
+  height: 100%;
+}

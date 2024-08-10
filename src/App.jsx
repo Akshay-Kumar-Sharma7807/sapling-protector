@@ -5,6 +5,7 @@ import {
   emotionTransform
 } from '@mantine/emotion';
 import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 import { BrowserRouter as Router } from "react-router-dom";
 import Layout from './Layout';
 import ReloadPrompt from "./components/ReloadPrompt";

@@ -1,12 +1,14 @@
 import { AppShell, Box, Divider, ScrollArea, useMantineColorScheme } from "@mantine/core";
 import NavBtn from "./NavBtn";
 import { NavLinks } from "./NavLinks";
-
+import { useSwipeable } from "react-swipeable";
 import React from 'react';
 
-export default function Navigation({ opened }) {
+export default function Navigation({ opened, toggleMobile }) {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-
+  const handlers = useSwipeable({
+    onSwipedLeft: () => toggleMobile()
+  });
 
   const share = (e) => {
     let shareData = {
@@ -26,9 +28,9 @@ export default function Navigation({ opened }) {
 
   return (
     
-      <ScrollArea>
+      <ScrollArea {...handlers} style={{ overflow: 'hidden' }}>
         <AppShell.Section grow>
-          <NavLinks />
+          <NavLinks toggleMobile={toggleMobile} />
           <NavBtn icon={<i className="bi bi-share"></i>} color="cyan" label="Share" onClick={share} />
           <Divider my={4} />
           <Box styles={{ display: 'none' }}>

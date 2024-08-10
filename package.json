@@ -33,6 +33,7 @@
     "react-leaflet": "^4.2.1",
     "react-onesignal": "^3.0.1",
     "react-router-dom": "^6.26.0",
+    "react-swipeable": "^7.0.1",
     "react-uuid": "^2.0.0"
   },
   "devDependencies": {

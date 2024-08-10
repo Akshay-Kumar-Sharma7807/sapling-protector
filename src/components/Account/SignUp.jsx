@@ -1,12 +1,10 @@
 import { Anchor, Avatar, Button, FileInput, Group, PasswordInput, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { showNotification } from '@mantine/notifications'
+import { notifications } from '@mantine/notifications'
 import React, { useState } from 'react'
 import { supabase } from '../../supabaseClient'
-import { DropzoneButton } from './DropzoneButton'
 
-
-export default function SignUp({ setCreateAccount }) {
+export default function SignUp({ setCreateAccount, setVisible }) {
     const [avatar, setAvatar] = useState("");
     const signUpForm = useForm({
         initialValues: {
@@ -22,6 +20,7 @@ export default function SignUp({ setCreateAccount }) {
     })
 
     const signUpEmail = async ({ username, email, password }) => {
+        setVisible(true)
         // console.log("sign up", email)
         const fileExt = avatar.name.split('.').pop()
         const url = `${Math.random() * 1000}.${fileExt}`
@@ -43,19 +42,20 @@ export default function SignUp({ setCreateAccount }) {
             }
         })
 
-        console.log(data, error)
-        if (error) showNotification({
+        // console.log(data, error)
+        if (error) notifications.show({
             title: "Error Creating account",
             message: error.message,
             color: "red"
         })
 
-        if (data) {
-            showNotification({
+        if (data && data.user) {
+            notifications.show({
                 title: "Confirm Email",
                 message: "We've sent you a confirmation link",
             })
         }
+        setVisible(false);
     }
     return (
         <form onSubmit={signUpForm.onSubmit((values) => signUpEmail(values))}>
