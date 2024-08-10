@@ -1,7 +1,7 @@
 import { Button, FileInput, Group, Image, NumberInput, Stack, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
-import { showNotification, updateNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 import { LocationPicker } from "niwa-location-picker";
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -36,9 +36,41 @@ export default function NewTree() {
         }
     })
 
+    let identify = (image) => {
+        // setVisible(true);
+        let formData = new FormData();
+        formData.append("organs", "auto")
+        formData.append("images", image)
+        fetch("https://my-api.plantnet.org/v2/identify/all?include-related-images=true&no-reject=false&lang=en&api-key=2b10G793uJs1Eceq9ckepgyL5O",
+            {
+                method: "POST",
+                body: formData
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                if (data.statusCode && data.statusCode !== 200) {
+                    // setError({
+                    //     head: data.error,
+                    //     message: data.message
+                    // })
+                    console.log("identify error")
+                }
+                else {
+                    return data;
+                }
+                // setVisible(false)
+            })
+            .catch((err) => {
+                console.log("error: ", err);
+                // setVisible(false)
+
+            })
+    }
+
     const createTree = async ({ name, location, type, age, position, latitude, longitude }) => {
         // setLoader(true)
-        showNotification({
+        notifications.show({
             id: 'create-tree',
             loading: true,
             title: 'Creating New Tree',
@@ -62,6 +94,8 @@ export default function NewTree() {
                 throw uploadError
             }
         }
+        let identifiedtype = identify(image).results[0];
+        form.setFieldValue("type", identifiedtype.species.common_names[0])
 
 
         const { data, error } = await supabase
@@ -80,7 +114,7 @@ export default function NewTree() {
                 },
             ])
         console.log(data, error)
-        updateNotification({
+        notifications.update({
             id: 'create-tree',
             color: 'teal',
             title: 'Tree Created',
@@ -141,6 +175,10 @@ export default function NewTree() {
 
     }, [])
 
+    useEffect(() => {
+        console.log(identify(image))
+    }, [image])
+
     return (
         <form onSubmit={form.onSubmit((values) => createTree(values))} >
             <Stack gap={4} style={{ position: "relative" }} p="sm">
@@ -176,6 +214,7 @@ export default function NewTree() {
                     label="Species"
                     placeholder="Neem, Ashoka, etc."
                     {...form.getInputProps('type')}
+                    disabled
                 />
                 <NumberInput withAsterisk
                     label="Age (years)"
