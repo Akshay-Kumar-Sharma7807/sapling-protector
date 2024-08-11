@@ -1,6 +1,6 @@
-import { Container, Group, Image, Loader, Stack, Text, Title } from '@mantine/core';
+import { Button, Container, Group, Image, Loader, Stack, Text, Title } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 // import L from 'leaflet';
 import { layer, source } from 'azure-maps-control';
@@ -47,6 +47,7 @@ const controls = [
 ];
 
 export default function Details() {
+    const navigate = useNavigate();
     const { treeId } = useParams();
     const [tree, setTree] = useState();
     const [imageURL, setImageURL] = useState();
@@ -98,6 +99,15 @@ export default function Details() {
     //     }
     // }, [isMapReady, tree])
 
+    async function deleteTree(treeId) {
+        let {data: tree, error} = await supabase
+            .from('trees')
+            .delete()
+            .eq('id', treeId)
+            .single()
+        console.log(tree, error)
+        navigate(-1);
+    }
 
     async function getTree(treeId) {
         let { data: tree, error } = await supabase
@@ -152,7 +162,7 @@ export default function Details() {
 
                     <Title order={3}>Details</Title>
                     <Text>Location: {tree.location}</Text>
-                    <Text>Type: {tree.type.commonNames[0]}</Text>
+                    <Text>Type: {tree.type?.commonNames[0]}</Text>
                     <Text>Created on: {dayjs(tree.created_at).format("DD MMMM YYYY")}</Text>
 
                     <Title order={3}>User</Title>
@@ -192,6 +202,7 @@ export default function Details() {
                     <Loader></Loader>
                 </Stack>
             }
+            <Button my="md" variant="outline" color="red" onClick={() => deleteTree(treeId)}>Delete this Tree</Button>
         </Container>
     )
 }
