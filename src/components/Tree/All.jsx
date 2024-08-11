@@ -51,6 +51,7 @@ export default function All() {
     return (
         <Container>
             <Title order={2}>All Trees</Title>
+            <Title order={3}>Total Trees :- {trees.length}</Title>
             <Stack align="center">
                 {trees.length === 0 &&
                     <>
@@ -78,7 +79,7 @@ export default function All() {
                                 // onClick={() => { openEditMenu(todo.id) }}
                                 >
                                     <Title order={2}>{tree.name}</Title>
-                                    <Text weight="bold">{tree.type}</Text>
+                                    <Text weight="bold">{tree.type?.commonNames[0]}</Text>
                                 </UnstyledButton>
                                 {/* <ActionIcon
                                 color="blue"
