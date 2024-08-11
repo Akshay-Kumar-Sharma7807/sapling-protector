@@ -7,7 +7,6 @@ import { layer, source } from 'azure-maps-control';
 import dayjs from 'dayjs';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
 
 const azureSubscriptionKey = import.meta.env.VITE_AZURE_MAPS_KEY;
@@ -153,7 +152,7 @@ export default function Details() {
 
                     <Title order={3}>Details</Title>
                     <Text>Location: {tree.location}</Text>
-                    <Text>Type: {tree.type}</Text>
+                    <Text>Type: {tree.type.commonNames[0]}</Text>
                     <Text>Created on: {dayjs(tree.created_at).format("DD MMMM YYYY")}</Text>
 
                     <Title order={3}>User</Title>
@@ -170,7 +169,7 @@ export default function Details() {
                         <Stack>
                             <Title order={3} my={2}>Position</Title>
 
-                            <MapContainer center={tree.position} zoom={13} scrollWheelZoom={false} style={{height: 300}}>
+                            {/* <MapContainer center={tree.position} zoom={13} scrollWheelZoom={false} style={{height: 300}}>
                                 <TileLayer
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -180,7 +179,7 @@ export default function Details() {
                                     {tree.name} <br /> {tree.location}
                                     </Popup>
                                 </Marker>
-                            </MapContainer>
+                            </MapContainer> */}
                             <div id="map" style={{ height: 300 }}>
 
                             </div>

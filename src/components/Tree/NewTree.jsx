@@ -24,6 +24,7 @@ export default function NewTree() {
             name: "",
             location: "",
             type: "",
+            identifiedType: null,
             age: 0,
             position: [],
             latitude: 0,
@@ -33,6 +34,7 @@ export default function NewTree() {
             name: (value) => value.length > 3 ? null : "Too short name",
             age: (value) => value >= 0 && value <= 10000 ? null : "Invalid Age",
             position: (value) => value.length == 2 ? null : "invalid postion",
+            identifiedType: (value) => value ? null : "invalid type",
         }
     })
 
@@ -57,7 +59,8 @@ export default function NewTree() {
                     console.log("identify error")
                 }
                 else {
-                    return data;
+                    form.setFieldValue("type", data.results[0].species.commonNames[0])
+                    form.setFieldValue("identifiedType", data.results[0].species)
                 }
                 // setVisible(false)
             })
@@ -68,8 +71,8 @@ export default function NewTree() {
             })
     }
 
-    const createTree = async ({ name, location, type, age, position, latitude, longitude }) => {
-        // setLoader(true)
+    const createTree = async ({ name, location, type, age, position, latitude, longitude, identifiedType }) => {
+        console.log(identifiedType)
         notifications.show({
             id: 'create-tree',
             loading: true,
@@ -102,7 +105,7 @@ export default function NewTree() {
                 {
                     name,
                     location,
-                    type,
+                    type: identifiedType,
                     age,
                     user_id: user.id,
                     display_image: url,
@@ -174,8 +177,9 @@ export default function NewTree() {
     }, [])
 
     useEffect(() => {
-        let identifiedtype = identify(image)?.results[0];
-        form.setFieldValue("type", identifiedtype?.species.common_names[0])
+        identify(image)
+        
+        // form.setFieldValue("type", identifiedtype?.species.common_names[0])
     }, [image])
 
     return (
@@ -188,6 +192,14 @@ export default function NewTree() {
                     <Image src={image ? URL.createObjectURL(image) : ""} radius="lg" sx={{ width: "100%", height: "100%" }} />
                 </Group>
                 <FileInput label="Image of Tree" onChange={setImage} value={image} placeholder="Image of your Tree" icon={<i className='bi bi-tree' />} />
+                <TextInput
+                    // mt="md"
+                    withAsterisk
+                    label="Species - Auto Identified"
+                    placeholder="Neem, Ashoka, etc."
+                    {...form.getInputProps('type')}
+                    disabled
+                />
                 <TextInput
                     withAsterisk
                     label="Tree Name"
@@ -207,14 +219,6 @@ export default function NewTree() {
 
                 {/* </AspectRatio> */}
 
-                <TextInput
-                    // mt="md"
-                    withAsterisk
-                    label="Species"
-                    placeholder="Neem, Ashoka, etc."
-                    {...form.getInputProps('type')}
-                    disabled
-                />
                 <NumberInput withAsterisk
                     label="Age (years)"
                     placeholder='Age of the Tree in years'

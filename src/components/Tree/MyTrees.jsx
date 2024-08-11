@@ -87,7 +87,7 @@ export default function MyTrees() {
                                 // onClick={() => { openEditMenu(todo.id) }}
                                 >
                                     <Title order={2}>{tree.name}</Title>
-                                    <Text weight="bold">{tree.type}</Text>
+                                    <Text weight="bold">{tree.type?.commonNames[0]}</Text>
                                 </UnstyledButton>
                                 {/* <ActionIcon
                                 color="blue"
