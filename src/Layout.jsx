@@ -29,6 +29,7 @@ import Tree from './components/Tree';
 import All from './components/Tree/All';
 import MyTrees from './components/Tree/MyTrees';
 import { supabase } from './supabaseClient';
+import { Spotlight } from '@mantine/spotlight';
 
 
 const oneSignalAppId = import.meta.env.VITE_PUBLIC_ONESIGNAL_APP_ID
@@ -51,7 +52,52 @@ export default function Layout() {
     trackMouse: true,
     onSwipedRight: () => toggleMobile()
   });
+  
+  const actions = [
+    {
+      id: 'home',
+      label: 'Home',
+      description: 'Get to home page',
+      onClick: () => navigate("/home"),
+    },
+    {
+      id: 'mytrees',
+      label: 'My Trees',
+      description: 'Get full information about your trees',
+      onClick: () => navigate("/my-trees"),
+    },
+    {
+      id: 'about',
+      label: 'About',
+      description: 'Visit about to lean more about all features',
+      onClick: () => navigate("/about"),
+    },
+    {
+      id: 'learn',
+      label: 'Learn',
+      description: 'Explore and learn about trees',
+      onClick: () => navigate("/learn"),
+    },
+    {
+      id: 'identify',
+      label: 'Identify',
+      description: 'Identify trees using images or descriptions',
+      onClick: () => navigate("/identify"),
+    },
+    {
+      id: 'near',
+      label: 'Trees Near Me',
+      description: 'Find trees near your location',
+      onClick: () => navigate("/near"),
+    },
+    {
+      id: 'donate',
+      label: 'Donate',
+      description: 'Support tree planting and conservation efforts',
+      onClick: () => navigate("/donate"),
+    },
 
+  ];
   useEffect(() => {
     setOpened(false)
   }, [location])
@@ -124,6 +170,14 @@ export default function Layout() {
       </AppShell.Navbar>
 
         <AppShell.Main>
+        <Spotlight
+        actions={actions}
+        nothingFound="Nothing found..."
+        highlightQuery
+        searchProps={{
+          placeholder: 'Search...',
+        }}
+      />
           <Routes>
             <Route path="/" element={
               <Navigate to="/my-trees" />

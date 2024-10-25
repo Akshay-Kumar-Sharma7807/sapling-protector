@@ -10,6 +10,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Layout from './Layout';
 import ReloadPrompt from "./components/ReloadPrompt";
 import { AuthProvider } from "./contexts/Auth";
+import '@mantine/spotlight/styles.css';
+
+import OneSignal from 'react-onesignal';
 
 const myColor = [
   '#e5feee',
@@ -32,7 +35,6 @@ const theme = createTheme({
 });
 
 function App() {
-  
   // const [user] = useAuthState(auth);
   // const documentState = useDocumentVisibility();
   // let myWorker = null;
@@ -68,21 +70,19 @@ function App() {
 
   // updateDoc(doc(db, "Users", user.uid, "Tasks", todo.id), { notified: true })
   // }
-
-  // every time the todos update check for deadlines
-  // useEffect(() => {
-  //   myWorker.postMessage(todos);
-  // }, [todos])
-
-
-
-
+  
+  
+  
+  
+  
   return (
       <MantineProvider stylesTransform={emotionTransform} theme={theme}>
         <MantineEmotionProvider>
         <Notifications />
+
           <AuthProvider>
             <Router>
+            
               <div className={"App"}>
                 <ReloadPrompt />
                 <Layout />
@@ -95,3 +95,46 @@ function App() {
 }
 
 export default App
+
+
+
+
+
+
+
+
+
+// // Since the user has requested not to use a function, we can directly write the code here.
+// // However, it's important to note that this might not be the best practice or the most efficient way to handle this scenario.
+
+// // Assuming that 'todos' is an array of tasks and 'db' is the Firestore database instance, and 'doc', 'updateDoc', and 'Notification' are imported from the necessary libraries.
+
+// // Iterate over the todos array
+// todos.forEach((todo, index) => {
+//   // Check if the task is overdue and not already notified
+//   if (!todo.notified && new Date(todo.dueDate) < new Date()) {
+//     // If the document is not hidden, show a notification
+//     if (documentState !== "hidden") {
+//       showNotification({
+//         title: "Due Task",
+//         message: `HEY! Your task "${todo.task}" is now overdue.`,
+//       });
+//     }
+
+//     // If the notification permission is granted, show a browser notification
+//     if (Notification.permission === "granted") {
+//       const text = `HEY! Your task "${todo.task}" is now overdue.`;
+//       const notification = new Notification('To do list', { body: text });
+//     }
+//     // If the notification permission is not granted, request permission and then show a browser notification
+//     else {
+//       Notification.requestPermission().then(result => {
+//         const text = `HEY! Your task "${todo.task}" is now overdue.`;
+//         const notification = new Notification('To do list', { body: text });
+//       });
+//     }
+
+//     // Update the task's 'notified' status in the database
+//     updateDoc(doc(db, "Users", user.uid, "Tasks", todo.id), { notified: true });
+//   }
+// });

@@ -12,17 +12,24 @@ export default function Profile() {
     const form = useForm({
         initialValues: {
             username: "",
-            // avatar: "",
             website: "",
+            bio: "",
+            location: "",
+            occupation: "",
         }
     })
 
     useEffect(() => {
-        console.log(profile)
+        if (profile) {
         form.setValues({
-            username: profile?.username,
-            website: profile?.website,
+                username: profile.username,
+                website: profile.website,
+                bio: profile.bio,
+                location: profile.location,
+                occupation: profile.occupation,
         })
+            setAvatar(profile.avatar_url);
+        }
     }, [profile])
 
     useEffect(() => {
@@ -36,13 +43,13 @@ export default function Profile() {
             .eq("id", id)
             .single()
 
-        // console.log(profile)
-        setAvatar(await getImageURL(profile.avatar_url))
-        setProfile(profile)
-
+        if (profile.avatar_url) {
+            setAvatar(await getImageURL(profile.avatar_url));
+    }
+        setProfile(profile);
     }
 
-    const updateProfile = async ({ username, website }) => {
+    const updateProfile = async ({ username, website, bio, location, occupation }) => {
         showNotification({
             id: 'update-profile',
             loading: true,
@@ -51,6 +58,14 @@ export default function Profile() {
             autoClose: false,
             disallowClose: true,
         })
+
+        let updateData = {
+                    username,
+                    website,
+            bio,
+            location,
+            occupation,
+        }
 
         if (typeof avatar !== "string") {
             // if avatar is file
@@ -64,49 +79,25 @@ export default function Profile() {
             if (uploadError) {
                 throw uploadError
             }
+            updateData.avatar_url = url;
+        }
             supabase.from("profiles")
-                .update({
-                    username,
-                    website,
-                    avatar_url: url
-                })
-                .eq("id", user.id)
+            .update(updateData)
+            .eq("id", user.id)
                 .then((res) => {
                     console.log(res)
                     hideNotification('update-profile')
                 })
         }
-        else {
-            // else the avatar is a string
-            // no need to update it
-            // because it was received from profile
-            supabase.from("profiles")
-                .update({
-                    username,
-                    website,
-                })
-                .eq("id", user.id)
-                .then((res) => {
-                    console.log(res)
-                    hideNotification('update-profile')
-                })
-        }
-
-    }
-
 
     const getImageURL = async (path) => {
-        console.log("downloading image")
         try {
             const { data, error } = await supabase.storage.from('avatars').getPublicUrl(path)
             if (error) {
                 throw error
             }
-            // console.log(data)
+            console.log(data)
             return data.publicUrl
-            // const url = URL.createObjectURL(data)
-            // return url
-            // setAvatarUrl(url)
         } catch (error) {
             console.log('Error downloading image: ', error.message)
         }
@@ -118,7 +109,6 @@ export default function Profile() {
             <form onSubmit={form.onSubmit((values) => updateProfile(values))}>
                 <Group position="center">
                     <Avatar src={typeof avatar == "string" ? avatar : URL.createObjectURL(avatar)} size="xl" radius="lg" />
-
                 </Group>
                 <FileInput label="Your Avatar" onChange={setAvatar} value={avatar} placeholder="Your Avatar" icon={<i className='bi bi-person' />} />
                 <TextInput
@@ -127,18 +117,30 @@ export default function Profile() {
                     placeholder="Your name"
                     {...form.getInputProps('username')}
                 />
-
+                <TextInput
+                    label="Bio"
+                    placeholder="Tell us about yourself"
+                    {...form.getInputProps('bio')}
+                />
+                <TextInput
+                    label="Location"
+                    placeholder="Your city, country"
+                    {...form.getInputProps('location')}
+                />
+                <TextInput
+                    label="Occupation"
+                    placeholder="Your profession"
+                    {...form.getInputProps('occupation')}
+                />
                 <TextInput
                     label="Website"
                     placeholder="https://yourwebsite.com"
                     {...form.getInputProps('website')}
                 />
-
                 <Group position="right" mt="md">
                     <Button type="submit">Submit</Button>
                 </Group>
             </form>
-
         </Container>
     )
 }

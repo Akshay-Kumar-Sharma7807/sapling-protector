@@ -2,6 +2,7 @@ import { ActionIcon, Box, Group, Title, Tooltip, useMantineTheme } from "@mantin
 import React from 'react';
 import Account from "../Account/";
 import ThemeToggle from "./ThemeToggle";
+import { spotlight } from "@mantine/spotlight";
 
 export default function Head() {
   const theme = useMantineTheme();
@@ -11,7 +12,7 @@ export default function Head() {
         <Title order={3}>Sapro</Title>
         <Group ml="auto" m="md">
           <Tooltip label="Search" withArrow>
-            <ActionIcon onClick={() => console.log("open spotlinght")} variant="default">
+            <ActionIcon onClick={() => spotlight.open()} variant="default">
               <i className='bi bi-search'></i>
             </ActionIcon>
           </Tooltip>
