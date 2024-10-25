@@ -1,11 +1,13 @@
 import { Container, Title, Grid, Card, Group, Text, Button, Image } from '@mantine/core'
 import React from 'react'
 import data from "./articles.json";
-
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Learn() {
-  const articles = data["articles"]
+  const articles = data["articles"];
+  const navigate = useNavigate();
+
 
     return (
         <Container>
@@ -26,7 +28,7 @@ export default function Learn() {
                   </Text>
         </Group>
 
-                  <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+                  <Button variant="light" color="blue" fullWidth mt="md" radius="md" onClick={() => navigate("/articles/" + index)}>
                     Read More
                   </Button>
                 </Card>

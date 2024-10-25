@@ -30,6 +30,7 @@ import All from './components/Tree/All';
 import MyTrees from './components/Tree/MyTrees';
 import { supabase } from './supabaseClient';
 import { Spotlight } from '@mantine/spotlight';
+import Article from './components/Learn/Article';
 
 
 const oneSignalAppId = import.meta.env.VITE_PUBLIC_ONESIGNAL_APP_ID
@@ -219,6 +220,7 @@ export default function Layout() {
             <Route path="/learn" element={
               <Learn />
             } />
+            <Route path='articles/:index' element={<Article />} />
             <Route path="/identify" element={
               <Identify />
             } />
