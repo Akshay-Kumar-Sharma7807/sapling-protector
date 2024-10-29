@@ -1,4 +1,4 @@
-import { Anchor, Button, Container, Group, Image, Paper, Stack, Text, Title, UnstyledButton } from '@mantine/core';
+import { Anchor, Badge, Button, Container, Group, Image, Paper, SimpleGrid, Stack, Text, Title, UnstyledButton } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -26,6 +26,7 @@ export default function MyTrees() {
             data[i].url = url
         }
         // data.url = url
+        console.log(data)
         return data
     }
 
@@ -70,43 +71,42 @@ export default function MyTrees() {
                     </>
                 }
 
+<SimpleGrid cols={1} spacing="md" breakpoints={[{ maxWidth: 'sm', cols: 1 }, { maxWidth: 'md', cols: 2 }]}>
                 {trees.map((tree) => (
-                    <Anchor component={Link} to={`/tree/${tree.id}`} sx={{ width: "100%" }}>
-                        <Paper p="sm" sx={{ width: "100%" }} shadow="md" radius="md" mt="xs" key={tree.id} >
+            <Paper
+    p="md"
+    shadow="sm"
+    radius="md"
+    withBorder
+    key={tree.id}
+    component={Link} to={`/tree/${tree.id}`} 
+    sx={(theme, u) => ({
+        [u.light]: {
+            '&:hover': {
+              backgroundColor: theme.colors.gray[1],
+            },
+          },
 
-                            <Group key={tree.id} size="lg">
-                                <Image src={tree.url} width={60}
-                                    height={60}
-                                    fit="cover" radius="md" />
-                                {/* <Checkbox onChange={(e) => completeTodo(e, todo.id)}
-                                radius="xl"
-                                checked={todo.completed} /> */}
-
-                                <UnstyledButton
-                                    sx={{ flex: 1 }}
-                                // onClick={() => { openEditMenu(todo.id) }}
-                                >
-                                    <Title order={2}>{tree.name}</Title>
-                                    <Text weight="bold">{tree.type?.commonNames[0]}</Text>
-                                </UnstyledButton>
-                                {/* <ActionIcon
-                                color="blue"
-                                variant="subtle"
-                            onClick={() => starTodo(todo.id)}
-                            >
-                                <i className={`bi bi-star-fill`} size={16} />
-                            </ActionIcon>
-                            <ActionIcon
-                                color="red"
-                                variant="subtle"
-                            onClick={() => deleteTodo(todo.id)}
-                            >
-                                <i className={`bi bi-trash`} size={16} />
-                            </ActionIcon> */}
-                            </Group>
-                        </Paper>
-                    </Anchor>
+          [u.dark]: {
+            '&:hover': {
+              backgroundColor: theme.colors.dark[8],
+            },
+          },
+          width: "100%"
+    })}
+>
+    <Group position="apart" mb="xs">
+        <Text weight={500} color="white">{tree.name}</Text>
+        <Badge color="pink" variant="light">
+            {tree.type ? tree.type.commonNames[0] : 'Unknown Type'}
+        </Badge>
+    </Group>
+    <Image src={tree.url} width="100%" fit="contain" radius="md" />
+    <Text>Location: {tree.location}</Text>
+    <Text>Age: {tree.age}</Text>
+</Paper>
                 ))}
+</SimpleGrid>
             </Stack>
         </Container>
     )

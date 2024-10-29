@@ -10,14 +10,13 @@ export default function Home() {
         Protect and preserve our forests with real-time insights and proactive care. The Saplings Protector system leverages advanced technology to monitor, analyze, and safeguard trees, ensuring a healthier environment for generations to come.
         </Text>
 
-        <Group className={classes.control}>
-        <Button component={Link} variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 90 }} size="xl" radius="xl" to="/my-trees">
+        <Group className={classes.control} position="center" mt="xl">
+        <Button component={Link} variant="filled" gradient={{ from: 'teal', to: 'lime', deg: 90 }} size="xl" radius="xl" to="/my-trees" className={classes.button}>
           Get started
         </Button>
-        <Button component={Link} variant='light' color="green"  to="/about" size="xl" radius="xl">
+        <Button component={Link} variant='outline' color="teal"  to="/about" size="xl" radius="xl" className={classes.button}>
           Learn More
         </Button>
-        
         </Group>
       </Container>
   );
