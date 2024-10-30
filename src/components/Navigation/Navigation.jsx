@@ -11,19 +11,29 @@ export default function Navigation({ opened, toggleMobile }) {
   });
 
   const share = (e) => {
-    let shareData = {
-      title: "Sapro",
-      text: "Save Trees and build a greener world",
+    const shareData = {
+      title: "Sapro - Build a Greener World",
+      text: "Join us in saving trees and creating a sustainable future. Let's make a positive impact together!",
       url: "https://saplings-protector.netlify.app"
     }
+
     try {
       if (navigator.canShare(shareData)) {
         navigator.share(shareData)
-      }
+            .then(() => {
+              alert("Thank you for sharing Sapro!");
+            })
+            .catch(error => {
+              console.error("Sharing failed:", error);
+            });
+      } else {
+        // Fallback for sharing unsupported browsers
+        alert("Here's the share link for Sapro: " + shareData.url);
     }
-    catch {
-      console.log("Share isn't supported")
     }
+    catch (error) {
+      console.error("An error occurred while trying to share:", error);
+  }
   }
 
   return (

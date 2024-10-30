@@ -1,13 +1,26 @@
-import { Anchor, Avatar, Button, Drawer, Group, LoadingOverlay, PasswordInput, Stack, TextInput, Title, Tooltip, UnstyledButton } from '@mantine/core';
+import {
+  Anchor,
+  Avatar,
+  Button,
+  Drawer,
+  Group,
+  LoadingOverlay,
+  PasswordInput,
+  Stack,
+  TextInput,
+  Title,
+  Tooltip,
+  UnstyledButton,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { notifications } from '@mantine/notifications';
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { notifications } from "@mantine/notifications";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
-import SignUp from './SignUp';
+import SignUp from "./SignUp";
 
 export default function Account() {
-  const [session, setSession] = useState(null)
+  const [session, setSession] = useState(null);
   const [createAccount, setCreateAccount] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,103 +28,99 @@ export default function Account() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
+      setSession(session);
+    });
 
     supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-  }, [])
+      setSession(session);
+    });
+  }, []);
 
   useEffect(() => {
-    if (location.pathname == '/login') {
-      setOpen(true)
+    if (location.pathname == "/login") {
+      setOpen(true);
     }
-  }, [location])
-
+  }, [location]);
 
   const form = useForm({
     initialValues: {
       email: "",
-      password: ""
+      password: "",
     },
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-    }
-  })
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+    },
+  });
 
   const [open, setOpen] = useState();
   const toggleAccount = () => {
-    setOpen((o) => !o)
-  }
+    setOpen((o) => !o);
+  };
 
-  const [username, setUsername] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
+  const [username, setUsername] = useState(null);
+  const [avatar_url, setAvatarUrl] = useState(null);
 
   useEffect(() => {
-    getProfile()
-  }, [session])
+    getProfile();
+  }, [session]);
 
   const getProfile = async () => {
     try {
-      const { user } = session
+      const { user } = session;
 
       let { data, error, status } = await supabase
-        .from('profiles')
+        .from("profiles")
         .select(`username, avatar_url`)
-        .eq('id', user.id)
-        .single()
+        .eq("id", user.id)
+        .single();
 
       if (data) {
-        setUsername(data.username)
-        downloadImage(data.avatar_url)
+        setUsername(data.username);
+        downloadImage(data.avatar_url);
       }
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
-
+  };
 
   const downloadImage = async (path) => {
     try {
-      const { data, error } = await supabase.storage.from('avatars').download(path)
+      const { data, error } = await supabase.storage
+        .from("avatars")
+        .download(path);
       if (error) {
-        throw error
+        throw error;
       }
-      const url = URL.createObjectURL(data)
-      setAvatarUrl(url)
+      const url = URL.createObjectURL(data);
+      setAvatarUrl(url);
     } catch (error) {
-      console.log('Error downloading image: ', error.message)
+      console.log("Error downloading image: ", error.message);
     }
-  }
-
-
-
+  };
 
   const signInEmail = async ({ email, password }) => {
     setVisible(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
-    })
+    });
     if (error) {
       notifications.show({
         title: "Error Signing In",
         message: error.message,
         color: "red",
-        position: 'bottom-right',
-      })
+        position: "bottom-right",
+      });
     }
-    if (location.pathname == '/login') {
-      navigate("/home")
+    if (location.pathname == "/login") {
+      navigate("/home");
     }
     setVisible(false);
-  }
-
+  };
 
   const logout = async () => {
-    const { error } = await supabase.auth.signOut()
-  }
+    const { error } = await supabase.auth.signOut();
+  };
 
   return (
     <>
@@ -121,8 +130,11 @@ export default function Account() {
           <i className='bi bi-person-circle'></i>
         </ActionIcon> */}
         <UnstyledButton>
-          <Avatar src={avatar_url} radius="xl" onClick={() => toggleAccount()}></Avatar>
-
+          <Avatar
+            src={avatar_url}
+            radius="xl"
+            onClick={() => toggleAccount()}
+          ></Avatar>
         </UnstyledButton>
       </Tooltip>
       <Drawer
@@ -136,49 +148,70 @@ export default function Account() {
         sx={{
           "& .mantine-Drawer-drawer": {
             overflowY: "auto",
-          }
+          },
         }}
       >
-        <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
-        {
-          session ?
-            <Stack align="center">
-              <Avatar src={avatar_url} size="xl" radius="xl" />
-              <Title order={4}>Hi! {username}</Title>
-              <Button onClick={() => logout()}>Sign Out</Button>
-            </Stack>
-            :
-            <Stack>
-              {createAccount ?
-                <SignUp setCreateAccount={setCreateAccount} setVisible={setVisible} />
-                :
-                <form onSubmit={form.onSubmit((values) => signInEmail(values))}>
-                  <Title order={3}>Login</Title>
-                  <TextInput
-                    withAsterisk
-                    label="Email"
-                    placeholder="your@email.com"
-                    {...form.getInputProps('email')}
-                  />
+        <LoadingOverlay
+          visible={visible}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+        />
+        {session ? (
+          <Stack align="center">
+            <Avatar src={avatar_url} size="xl" radius="xl" />
+            <Title order={4}>Hi! {username}</Title>
+            <Button
+              onClick={() => logout()}
+              leftSection={<i className="bi bi-box-arrow-right"></i>}
+              color="red"
+            >
+              Sign Out
+            </Button>
+            <Button
+              onClick={() => {
+                navigate("/profile");
+              }}
+              leftSection={<i className="bi bi-pencil-square"></i>}
+            >
+              Edit Profile
+            </Button>
+          </Stack>
+        ) : (
+          <Stack>
+            {createAccount ? (
+              <SignUp
+                setCreateAccount={setCreateAccount}
+                setVisible={setVisible}
+              />
+            ) : (
+              <form onSubmit={form.onSubmit((values) => signInEmail(values))}>
+                <Title order={3}>Login</Title>
+                <TextInput
+                  withAsterisk
+                  label="Email"
+                  placeholder="your@email.com"
+                  {...form.getInputProps("email")}
+                />
 
-                  <PasswordInput
-                    // mt="md"
-                    withAsterisk
-                    label="Password"
-                    placeholder="Top Secret"
-                    {...form.getInputProps('password')}
-                  />
+                <PasswordInput
+                  // mt="md"
+                  withAsterisk
+                  label="Password"
+                  placeholder="Top Secret"
+                  {...form.getInputProps("password")}
+                />
 
-                  <Group position="center" mt="md">
-                    <Button type="submit">Login</Button>
-                  </Group>
-                  <Anchor onClick={() => setCreateAccount(true)}>Create New Account</Anchor>
-                </form>
-              }
-              {/* <Button>Sign up</Button> */}
-            </Stack>
-
-        }
+                <Group position="center" mt="md">
+                  <Button type="submit">Login</Button>
+                </Group>
+                <Anchor onClick={() => setCreateAccount(true)}>
+                  Create New Account
+                </Anchor>
+              </form>
+            )}
+            {/* <Button>Sign up</Button> */}
+          </Stack>
+        )}
 
         {/* {user ?
           <Stack align="center">
@@ -204,5 +237,5 @@ export default function Account() {
         } */}
       </Drawer>
     </>
-  )
+  );
 }
