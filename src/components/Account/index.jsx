@@ -33,7 +33,7 @@ export default function Account() {
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      setOpen((o) => !o);
+      setOpen((o) => false);
     });
   }, []);
 
